@@ -8,10 +8,16 @@ AI-parity CLI + MCP server planned (see the plan).
 > **Status: all functional milestones (Jalons 0–7) done.** ~57 components across
 > 10 categories + the full ~10-theme catalog + a responsive App Shell + the
 > AI-oriented chat set, plus the AI-parity tooling (CLI, manifest, MCP server).
-> Everything analyzes clean and passes tests (107 Flutter + 18 Dart across the
+> Everything analyzes clean and passes tests (110 Flutter + 24 Dart across the
 > workspace). The library depends only on Flutter's `widgets` + theme layer — no
-> Material *widgets*. Optional follow-ups: registry auto-harvester, real swizzle,
-> publishing, lints, templates.
+> Material *widgets*.
+>
+> Advanced tooling done: **registry prop-harvester** (real constructor props via
+> the analyzer — the registry can't drift), **real swizzle** (`astryx swizzle
+> <name> --apply` copies source + rewrites imports), **`astryx_templates`**
+> (drop-in dashboard/form/settings screens), **`astryx_lints`** (custom_lint
+> rules: Material-free imports, tokens over raw colors). Optional remaining:
+> publishing to a registry.
 
 Jalon 4 (rich input & overlays): **Calendar** (DST-safe keyboard grid),
 **Date/Time Input**, **Typeahead**, **Multi Selector**, **Tokenizer**, **Command
@@ -117,8 +123,3 @@ flutter test               # Button widget/semantics + gallery smoke tests
 cd packages/example && flutter run   # the gallery, any platform
 ```
 
-## Full plan
-
-The complete port plan (all milestones, the CLI/MCP parity design, UX/UI
-translation strategy) lives at
-`~/.claude/plans/je-veux-le-plan-structured-candle.md`.
