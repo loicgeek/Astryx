@@ -65,7 +65,11 @@ class _GalleryScreenState extends State<GalleryScreen> {
   bool _switched = false;
   double _volume = 0.4;
   String _view = 'list';
+  DateTime? _date;
+  List<String> _tags = ['design', 'flutter'];
   final _search = TextEditingController();
+
+  static const _fruits = ['Apple', 'Apricot', 'Avocado', 'Banana', 'Blueberry', 'Cherry'];
 
   @override
   void dispose() {
@@ -266,6 +270,19 @@ class _GalleryScreenState extends State<GalleryScreen> {
           AstryxSwitch(value: _switched, semanticLabel: 'Notifications', onChanged: (v) => setState(() => _switched = v)),
         ]),
         SizedBox(width: 260, child: AstryxSlider(value: _volume, semanticLabel: 'Volume', onChanged: (v) => setState(() => _volume = v))),
+        Wrap(spacing: t.spacing.gapLg, runSpacing: t.spacing.gapMd, crossAxisAlignment: WrapCrossAlignment.center, children: [
+          AstryxDateInput(value: _date, onChanged: (d) => setState(() => _date = d)),
+          SizedBox(
+            width: 220,
+            child: AstryxTypeahead<String>(
+              hintText: 'Search fruit…',
+              suggestions: (q) => _fruits.where((f) => f.toLowerCase().contains(q.toLowerCase())).toList(),
+              itemLabel: (s) => s,
+              onSelected: (_) {},
+            ),
+          ),
+        ]),
+        SizedBox(width: 360, child: AstryxTokenizer(value: _tags, onChanged: (v) => setState(() => _tags = v))),
       ]),
     );
   }
@@ -310,6 +327,25 @@ class _GalleryScreenState extends State<GalleryScreen> {
           label: 'Show toast',
           variant: AstryxButtonVariant.secondary,
           onPressed: () => showAstryxToast(context, message: 'Saved successfully', tone: AstryxTone.success),
+        ),
+        AstryxButton(
+          label: 'Command palette',
+          variant: AstryxButtonVariant.secondary,
+          onPressed: () => showAstryxCommandPalette(context, commands: [
+            AstryxCommand(label: 'Toggle theme', hint: '⌘T', onRun: widget.onToggleMode),
+            AstryxCommand(label: 'New project', onRun: () {}),
+            AstryxCommand(label: 'Open settings', onRun: () {}),
+          ]),
+        ),
+        AstryxHoverCard(
+          card: const SizedBox(
+            width: 200,
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              AstryxHeading('Astryx', level: AstryxHeadingLevel.h3),
+              AstryxText('Hover cards hold rich, interactive content.', tone: AstryxTextTone.muted),
+            ]),
+          ),
+          child: const AstryxBadge('Hover card', tone: AstryxTone.accent),
         ),
       ]),
     );
