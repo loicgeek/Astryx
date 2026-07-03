@@ -37,6 +37,10 @@ export 'src/feedback/badge/astryx_badge.dart';
 export 'src/feedback/banner/astryx_banner.dart';
 export 'src/feedback/spinner/astryx_spinner.dart';
 
+// Container
+export 'src/container/card/astryx_card.dart';
+export 'src/container/collapsible/astryx_collapsible.dart';
+
 // Content
 export 'src/content/avatar/astryx_avatar.dart';
 export 'src/content/code/astryx_code.dart';
