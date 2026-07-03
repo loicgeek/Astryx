@@ -5,6 +5,9 @@
 /// source (swizzle-ready).
 library astryx_widgets;
 
+// Theme-level component overrides
+export 'src/theme/astryx_component_styles.dart';
+
 // Action
 export 'src/action/button/astryx_button.dart';
 export 'src/action/button/astryx_button_style.dart';

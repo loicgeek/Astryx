@@ -13,19 +13,24 @@ class AstryxGalleryApp extends StatefulWidget {
 }
 
 class _AstryxGalleryAppState extends State<AstryxGalleryApp> {
-  final AstryxThemeData _theme = AstryxThemeData.neutral();
+  AstryxThemeSpec _spec = AstryxThemeCatalog.neutral;
   ThemeMode _mode = ThemeMode.light;
 
   @override
   Widget build(BuildContext context) {
+    // MaterialApp wraps this in an AnimatedTheme, so swapping theme/mode lerps
+    // the token extensions (colors, spacing, shape) for a smooth transition.
+    final theme = AstryxThemeCatalog.build(_spec);
     return MaterialApp(
       title: 'Astryx Gallery',
       debugShowCheckedModeBanner: false,
-      theme: _theme.light,
-      darkTheme: _theme.dark,
+      theme: theme.light,
+      darkTheme: theme.dark,
       themeMode: _mode,
       home: GalleryScreen(
-        themeName: _theme.name,
+        themeName: _spec.name,
+        themeNames: [for (final s in AstryxThemeCatalog.specs) s.name],
+        onSelectTheme: (name) => setState(() => _spec = AstryxThemeCatalog.specs.firstWhere((s) => s.name == name)),
         isDark: _mode == ThemeMode.dark,
         onToggleMode: () => setState(() {
           _mode = _mode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
@@ -39,11 +44,15 @@ class GalleryScreen extends StatefulWidget {
   const GalleryScreen({
     super.key,
     required this.themeName,
+    required this.themeNames,
+    required this.onSelectTheme,
     required this.isDark,
     required this.onToggleMode,
   });
 
   final String themeName;
+  final List<String> themeNames;
+  final ValueChanged<String> onSelectTheme;
   final bool isDark;
   final VoidCallback onToggleMode;
 
@@ -99,19 +108,39 @@ class _GalleryScreenState extends State<GalleryScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Row(
-          spacing: t.spacing.gapMd,
-          children: [
-            const AstryxAvatar(initials: 'Astryx', label: 'Astryx', size: AstryxAvatarSize.lg),
-            AstryxHeading('Astryx • ${widget.themeName}', level: AstryxHeadingLevel.display),
-          ],
+        Flexible(
+          child: Row(
+            spacing: t.spacing.gapMd,
+            children: [
+              const AstryxAvatar(initials: 'Astryx', label: 'Astryx', size: AstryxAvatarSize.lg),
+              Flexible(child: AstryxHeading('Astryx • ${widget.themeName}', level: AstryxHeadingLevel.display, maxLines: 1)),
+            ],
+          ),
         ),
-        AstryxButton(
-          label: widget.isDark ? 'Light' : 'Dark',
-          variant: AstryxButtonVariant.secondary,
-          leading: Icon(widget.isDark ? Icons.light_mode : Icons.dark_mode),
-          onPressed: widget.onToggleMode,
-        ),
+        Row(spacing: t.spacing.gapMd, children: [
+          AstryxDropdownMenu<String>(
+            trigger: Container(
+              padding: EdgeInsets.symmetric(horizontal: t.spacing.insetMd, vertical: t.spacing.insetSm),
+              decoration: BoxDecoration(
+                color: t.color.surfaceRaised,
+                borderRadius: t.shape.radiusControl,
+                border: Border.all(color: t.color.borderDefault),
+              ),
+              child: Row(mainAxisSize: MainAxisSize.min, spacing: t.spacing.gapSm, children: [
+                AstryxText('Theme: ${widget.themeName}', variant: AstryxTextVariant.label),
+                Icon(Icons.expand_more, size: 16, color: t.color.textMuted),
+              ]),
+            ),
+            onSelected: widget.onSelectTheme,
+            items: [for (final name in widget.themeNames) AstryxMenuItem(value: name, label: name)],
+          ),
+          AstryxButton(
+            label: widget.isDark ? 'Light' : 'Dark',
+            variant: AstryxButtonVariant.secondary,
+            leading: Icon(widget.isDark ? Icons.light_mode : Icons.dark_mode),
+            onPressed: widget.onToggleMode,
+          ),
+        ]),
       ],
     );
   }

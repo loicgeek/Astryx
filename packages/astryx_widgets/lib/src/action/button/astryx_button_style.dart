@@ -1,6 +1,8 @@
 import 'package:astryx_tokens/astryx_tokens.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../theme/astryx_component_styles.dart';
+
 /// Visual variant of an [AstryxButton]. Maps to semantic color roles.
 enum AstryxButtonVariant { primary, secondary, ghost, danger }
 
@@ -135,6 +137,8 @@ class AstryxButtonStyle {
       labelStyle: label.copyWith(color: fg, fontWeight: FontWeight.w600),
       minHeight: minH,
     );
-    return base.merge(override);
+    // Precedence: token default ⊕ theme-level component style ⊕ per-instance.
+    final themeStyle = AstryxComponentStyles.of(context)?.button;
+    return base.merge(themeStyle).merge(override);
   }
 }
