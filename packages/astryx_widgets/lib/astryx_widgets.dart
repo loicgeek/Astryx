@@ -9,6 +9,11 @@ library astryx_widgets;
 export 'src/action/button/astryx_button.dart';
 export 'src/action/button/astryx_button_style.dart';
 
+// Layout
+export 'src/layout/divider/astryx_divider.dart';
+export 'src/layout/grid/astryx_grid.dart';
+export 'src/layout/section/astryx_section.dart';
+
 // Feedback
 export 'src/feedback/badge/astryx_badge.dart';
 export 'src/feedback/banner/astryx_banner.dart';
