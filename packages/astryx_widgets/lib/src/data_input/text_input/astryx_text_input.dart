@@ -1,8 +1,9 @@
 import 'package:astryx_foundations/astryx_foundations.dart';
 import 'package:astryx_tokens/astryx_tokens.dart';
-import 'package:flutter/material.dart' show TextField, InputDecoration;
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+
+import '../../internal/astryx_editable.dart';
 
 /// {@template astryx.textinput}
 /// A single-line text field with the Astryx look. Wraps the framework's text
@@ -55,6 +56,9 @@ class AstryxTextInput extends StatefulWidget {
 class _AstryxTextInputState extends State<AstryxTextInput> {
   FocusNode? _internalNode;
   FocusNode get _node => widget.focusNode ?? (_internalNode ??= FocusNode());
+  TextEditingController? _internalController;
+  TextEditingController get _controller =>
+      widget.controller ?? (_internalController ??= TextEditingController());
   bool _focused = false;
 
   @override
@@ -69,6 +73,7 @@ class _AstryxTextInputState extends State<AstryxTextInput> {
   void dispose() {
     _node.removeListener(_onFocusChange);
     _internalNode?.dispose();
+    _internalController?.dispose();
     super.dispose();
   }
 
@@ -110,9 +115,10 @@ class _AstryxTextInputState extends State<AstryxTextInput> {
                 child: widget.leading!,
               ),
             Expanded(
-              child: TextField(
-                controller: widget.controller,
+              child: AstryxEditable(
+                controller: _controller,
                 focusNode: _node,
+                hintText: widget.hintText,
                 onChanged: widget.onChanged,
                 onSubmitted: widget.onSubmitted,
                 obscureText: widget.obscureText,
@@ -120,13 +126,6 @@ class _AstryxTextInputState extends State<AstryxTextInput> {
                 keyboardType: widget.keyboardType,
                 textInputAction: widget.textInputAction,
                 inputFormatters: widget.inputFormatters,
-                cursorColor: t.color.accentDefault,
-                style: t.typography.body.copyWith(color: t.color.textDefault),
-                // Collapsed: remove all Material decoration; we draw the frame.
-                decoration: InputDecoration.collapsed(
-                  hintText: widget.hintText,
-                  hintStyle: t.typography.body.copyWith(color: t.color.textMuted),
-                ),
               ),
             ),
             if (widget.trailing != null)
