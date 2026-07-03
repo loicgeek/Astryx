@@ -65,6 +65,14 @@ export 'src/feedback/progress_bar/astryx_progress_bar.dart';
 export 'src/feedback/skeleton/astryx_skeleton.dart';
 export 'src/feedback/spinner/astryx_spinner.dart';
 
+// Chat
+export 'src/chat/composer/astryx_chat_composer.dart';
+export 'src/chat/layout/astryx_chat_layout.dart';
+export 'src/chat/message/astryx_chat_message.dart';
+export 'src/chat/message_metadata/astryx_chat_message_metadata.dart';
+export 'src/chat/system_message/astryx_chat_system_message.dart';
+export 'src/chat/tool_calls/astryx_chat_tool_calls.dart';
+
 // Container
 export 'src/container/card/astryx_card.dart';
 export 'src/container/carousel/astryx_carousel.dart';

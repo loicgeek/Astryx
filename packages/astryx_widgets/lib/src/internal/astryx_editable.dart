@@ -20,6 +20,8 @@ class AstryxEditable extends StatefulWidget {
     this.textInputAction,
     this.inputFormatters,
     this.expandsWidth = true,
+    this.minLines = 1,
+    this.maxLines = 1,
   });
 
   final TextEditingController controller;
@@ -35,6 +37,10 @@ class AstryxEditable extends StatefulWidget {
 
   /// When false, the editor sizes to its content (used inside the tokenizer's Wrap).
   final bool expandsWidth;
+
+  /// Line bounds. `maxLines: 1` is single-line; a larger value (or null) grows.
+  final int minLines;
+  final int? maxLines;
 
   @override
   State<AstryxEditable> createState() => _AstryxEditableState();
@@ -62,14 +68,16 @@ class _AstryxEditableState extends State<AstryxEditable> {
       inputFormatters: widget.inputFormatters,
       onChanged: widget.onChanged,
       onSubmitted: widget.onSubmitted,
-      maxLines: 1,
+      minLines: widget.minLines,
+      maxLines: widget.maxLines,
       rendererIgnoresPointer: false,
       showCursor: true,
     );
 
-    // Hint overlay shown while empty; rebuilds with the controller.
+    // Hint overlay shown while empty; rebuilds with the controller. Single-line
+    // centers vertically; multiline aligns to the top.
     final stack = Stack(
-      alignment: AlignmentDirectional.centerStart,
+      alignment: widget.maxLines == 1 ? AlignmentDirectional.centerStart : AlignmentDirectional.topStart,
       children: [
         if (widget.hintText != null)
           ListenableBuilder(
