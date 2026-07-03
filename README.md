@@ -5,10 +5,20 @@ A Flutter/Dart port of [Meta's Astryx](https://astryx.atmeta.com/) design system
 token-driven theming; source-available components (swizzle-ready); with an
 AI-parity CLI + MCP server planned (see the plan).
 
-> **Status: Jalon 0 (Foundations) — complete & verified.** Token layer, theming
-> cascade, the reference **Button** component, and a gallery example all compile,
-> analyze clean, and pass tests. Remaining milestones (MVP component set, themes,
-> navigation, tooling) are in the plan.
+> **Status: Jalon 1 (MVP component set) — in progress.** Jalon 0 foundations
+> plus ~22 components across Action, Content, Feedback, Layout, Data Input and
+> Overlay categories. Everything analyzes clean and passes tests (31 across the
+> workspace). Remaining milestones (all ~10 themes, navigation, rich inputs,
+> tables, chat, and the CLI/MCP tooling) are in the plan.
+
+## Components so far
+
+- **Action**: Button, Segmented Control, Dropdown Menu
+- **Content**: Text, Heading, Avatar, Code / Code Block
+- **Feedback**: Badge, Status Dot, Spinner, Banner
+- **Layout**: Divider, Section, Grid
+- **Data Input**: Checkbox, Switch, Text Input, Field, Slider
+- **Overlay**: Tooltip, Popover, Dialog, Toast
 
 ## Monorepo layout
 
