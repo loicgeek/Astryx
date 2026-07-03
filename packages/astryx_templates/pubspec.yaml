@@ -1,0 +1,22 @@
+name: astryx_templates
+description: Ready-made, composed Astryx page templates (dashboard, signup form, settings) — drop-in screens built from astryx_widgets.
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: ^3.11.0
+  flutter: ">=3.41.0"
+
+resolution: workspace
+
+dependencies:
+  flutter:
+    sdk: flutter
+  astryx_foundations:
+  astryx_tokens:
+  astryx_widgets:
+
+dev_dependencies:
+  astryx_themes:
+  flutter_test:
+    sdk: flutter

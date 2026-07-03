@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:args/command_runner.dart';
 import 'package:astryx_core/astryx_core.dart';
@@ -115,15 +116,18 @@ class _ThemeCommand extends Command<int> {
 
 class _SwizzleCommand extends Command<int> {
   _SwizzleCommand() {
-    argParser.addFlag('dry-run', help: 'Print the plan without writing files.', negatable: false);
+    argParser
+      ..addOption('out', help: 'Consumer project root to copy the component into.', defaultsTo: '.')
+      ..addOption('widgets-src', help: 'Path to astryx_widgets/lib/src (auto-detected in a monorepo).')
+      ..addFlag('apply', help: 'Actually copy files (default is a dry run).', negatable: false);
   }
 
   @override
   final name = 'swizzle';
   @override
-  final description = 'Plan ejecting a component into the consumer repo.';
+  final description = 'Eject a component into the consumer repo (copy source + rewrite imports).';
   @override
-  final invocation = 'astryx swizzle <name> [--dry-run]';
+  final invocation = 'astryx swizzle <name> [--apply] [--out <dir>]';
 
   @override
   int run() {
@@ -132,14 +136,40 @@ class _SwizzleCommand extends Command<int> {
       printUsage();
       return 64;
     }
-    final plan = swizzlePlan(rest.first);
-    if (plan == null) {
-      stderrPrint('Unknown component: ${rest.first}');
+    final widgetsSrc = (argResults!.option('widgets-src')) ?? _resolveWidgetsSrc();
+    if (widgetsSrc == null) {
+      stderrPrint('Could not locate astryx_widgets/lib/src. Pass --widgets-src.');
       return 1;
     }
-    print(prettyJson(plan));
-    return 0;
+    try {
+      final report = swizzleComponent(
+        name: rest.first,
+        widgetsSrcDir: widgetsSrc,
+        outDir: argResults!.option('out')!,
+        dryRun: !argResults!.flag('apply'),
+      );
+      print(prettyJson(report.toJson()));
+      return 0;
+    } on SwizzleException catch (e) {
+      stderrPrint(e.message);
+      return 1;
+    }
   }
+}
+
+/// Walks up from the current directory to find `packages/astryx_widgets/lib/src`.
+String? _resolveWidgetsSrc() {
+  var dir = Directory.current;
+  for (var i = 0; i < 6; i++) {
+    final candidate = Directory('${dir.path}/packages/astryx_widgets/lib/src');
+    if (candidate.existsSync()) return candidate.path;
+    final self = Directory('${dir.path}/lib/src');
+    if (self.existsSync() && dir.path.endsWith('astryx_widgets')) return self.path;
+    final parent = dir.parent;
+    if (parent.path == dir.path) break;
+    dir = parent;
+  }
+  return null;
 }
 
 class _ManifestCommand extends Command<int> {
