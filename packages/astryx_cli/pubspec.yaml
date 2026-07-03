@@ -1,0 +1,20 @@
+name: astryx_cli
+description: The `astryx` (alias `xds`) command-line tool — component docs, templates, theme listing, swizzle plans, and the machine-readable manifest.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.11.0
+
+resolution: workspace
+
+executables:
+  astryx: astryx
+  xds: astryx
+
+dependencies:
+  astryx_core:
+  args: ^2.5.0
+
+dev_dependencies:
+  test: ^1.25.0
