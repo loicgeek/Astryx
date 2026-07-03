@@ -9,6 +9,12 @@ library astryx_widgets;
 export 'src/action/button/astryx_button.dart';
 export 'src/action/button/astryx_button_style.dart';
 
+// Overlay
+export 'src/overlay/dialog/astryx_dialog.dart';
+export 'src/overlay/popover/astryx_popover.dart';
+export 'src/overlay/toast/astryx_toast.dart';
+export 'src/overlay/tooltip/astryx_tooltip.dart';
+
 // Data Input
 export 'src/data_input/checkbox/astryx_checkbox.dart';
 export 'src/data_input/field/astryx_field.dart';
