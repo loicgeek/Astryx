@@ -13,6 +13,7 @@ export 'src/action/button/astryx_button.dart';
 export 'src/action/button/astryx_button_style.dart';
 export 'src/action/dropdown_menu/astryx_dropdown_menu.dart';
 export 'src/action/segmented_control/astryx_segmented_control.dart';
+export 'src/action/toolbar/astryx_toolbar.dart';
 
 // Navigation
 export 'src/navigation/breadcrumbs/astryx_breadcrumbs.dart';
@@ -66,6 +67,7 @@ export 'src/feedback/spinner/astryx_spinner.dart';
 
 // Container
 export 'src/container/card/astryx_card.dart';
+export 'src/container/carousel/astryx_carousel.dart';
 export 'src/container/collapsible/astryx_collapsible.dart';
 
 // Content
