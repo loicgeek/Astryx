@@ -5,11 +5,30 @@ A Flutter/Dart port of [Meta's Astryx](https://astryx.atmeta.com/) design system
 token-driven theming; source-available components (swizzle-ready); with an
 AI-parity CLI + MCP server planned (see the plan).
 
-> **Status: Jalon 3 (navigation & structure) — done.** Jalon 0 foundations +
-> ~33 components + the full ~10-theme catalog + a responsive App Shell.
-> Everything analyzes clean and passes tests (79 across the workspace).
-> Remaining milestones (rich inputs, tables, chat, and the CLI/MCP tooling) are
-> in the plan.
+> **Status: Jalon 3 + Jalon 7 done.** ~33 components + the full ~10-theme
+> catalog + a responsive App Shell, plus the AI-parity tooling (CLI, manifest,
+> MCP server). Everything analyzes clean and passes tests (61 Flutter + 18 Dart
+> across the workspace). Remaining milestones (rich inputs, tables, chat) are in
+> the plan.
+
+## AI-parity tooling (the Astryx signature)
+
+Humans and AI agents work from **one contract**. A shared registry
+(`astryx_core`) is the single source of truth for both surfaces:
+
+- **CLI** (`astryx` / alias `xds`): `list`, `component <name> [--json]`,
+  `template <name>`, `theme [name]`, `swizzle <name>`, `manifest`.
+  ```bash
+  dart run astryx_cli:astryx component button --json
+  dart run astryx_cli:astryx manifest
+  ```
+- **`manifest`**: the machine-readable "OpenAPI-for-the-CLI" — every operation
+  plus the full catalog (components, templates, themes).
+- **MCP server** (`astryx_mcp`): a stdio JSON-RPC server exposing the same
+  operations as tools (`astryx_get_component`, `astryx_manifest`, …) and
+  resources (`astryx://manifest`, `astryx://components/{name}`,
+  `astryx://guidelines/a11y`). A contract test asserts the MCP tool set equals
+  the manifest operation set, so the two can't drift.
 
 ## Components (by category)
 
