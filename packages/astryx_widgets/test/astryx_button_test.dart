@@ -49,14 +49,18 @@ void main() {
     );
   });
 
-  testWidgets('loading button shows a progress indicator and is inert', (tester) async {
+  testWidgets('loading button announces busy, keeps its label, and is inert', (tester) async {
     var taps = 0;
     await tester.pumpWidget(wrap(
       AstryxButton(label: 'Busy', loading: true, onPressed: () => taps++),
     ));
     await tester.pump();
 
-    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    // Busy is announced via a live region, the label stays, and taps do nothing.
+    expect(
+      tester.getSemantics(find.bySemanticsLabel('Busy')),
+      matchesSemantics(label: 'Busy', isButton: true, hasEnabledState: true, isLiveRegion: true),
+    );
     await tester.tap(find.text('Busy'));
     expect(taps, 0);
   });

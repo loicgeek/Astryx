@@ -1,6 +1,6 @@
 import 'package:astryx_foundations/astryx_foundations.dart';
 import 'package:astryx_tokens/astryx_tokens.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import 'astryx_button_style.dart';
 
@@ -164,11 +164,7 @@ class _AstryxButtonState extends State<AstryxButton> {
 
     final children = <Widget>[
       if (widget.loading)
-        SizedBox(
-          width: 14,
-          height: 14,
-          child: CircularProgressIndicator(strokeWidth: 2, color: fg),
-        )
+        _ButtonSpinner(color: fg)
       else if (widget.leading != null)
         IconTheme.merge(data: IconThemeData(color: fg, size: 16), child: widget.leading!),
       labelWidget,
@@ -183,4 +179,75 @@ class _AstryxButtonState extends State<AstryxButton> {
       children: children,
     );
   }
+}
+
+/// A tiny Material-free loading spinner for the button (rotating arc), so the
+/// component depends only on the widgets library.
+class _ButtonSpinner extends StatefulWidget {
+  const _ButtonSpinner({required this.color});
+  final Color color;
+
+  @override
+  State<_ButtonSpinner> createState() => _ButtonSpinnerState();
+}
+
+class _ButtonSpinnerState extends State<_ButtonSpinner> with SingleTickerProviderStateMixin {
+  late final AnimationController _c =
+      AnimationController(vsync: this, duration: const Duration(milliseconds: 800));
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final reduced = AstryxMotion.resolve(context).durationSlow == Duration.zero;
+    if (reduced) {
+      _c.stop();
+    } else if (!_c.isAnimating) {
+      _c.repeat();
+    }
+  }
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 14,
+      height: 14,
+      child: AnimatedBuilder(
+        animation: _c,
+        builder: (_, __) => CustomPaint(painter: _ButtonSpinnerPainter(_c.value, widget.color)),
+      ),
+    );
+  }
+}
+
+class _ButtonSpinnerPainter extends CustomPainter {
+  _ButtonSpinnerPainter(this.progress, this.color);
+  final double progress;
+  final Color color;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final stroke = size.width * 0.16;
+    final center = size.center(Offset.zero);
+    final radius = (size.width - stroke) / 2;
+    canvas.drawArc(
+      Rect.fromCircle(center: center, radius: radius),
+      progress * 6.283185,
+      1.8,
+      false,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = stroke
+        ..strokeCap = StrokeCap.round
+        ..color = color,
+    );
+  }
+
+  @override
+  bool shouldRepaint(_ButtonSpinnerPainter old) => old.progress != progress || old.color != color;
 }

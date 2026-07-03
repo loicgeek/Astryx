@@ -198,6 +198,76 @@ const List<AstryxComponentDoc> astryxRegistry = [
     sample: "AstryxSlider(value: v, semanticLabel: 'Volume', onChanged: (x) {})",
   ),
 
+  AstryxComponentDoc(
+    name: 'AstryxCalendar',
+    category: 'Data Input',
+    a11yRole: 'grid',
+    description: 'Month calendar; one keyboard stop (arrows move day, Enter selects, PageUp/Down month). DST-safe.',
+    props: [
+      AstryxProp('value', 'DateTime?'),
+      AstryxProp('onChanged', 'ValueChanged<DateTime>?'),
+      AstryxProp('firstDate', 'DateTime?'),
+      AstryxProp('lastDate', 'DateTime?'),
+    ],
+    sample: 'AstryxCalendar(value: d, onChanged: (x) {})',
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxDateInput',
+    category: 'Data Input',
+    description: 'Field that opens an AstryxCalendar in a popover to pick a date.',
+    composesWith: ['AstryxCalendar', 'AstryxField'],
+    props: [
+      AstryxProp('value', 'DateTime?'),
+      AstryxProp('onChanged', 'ValueChanged<DateTime>?'),
+    ],
+    sample: 'AstryxDateInput(value: d, onChanged: (x) {})',
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxTimeInput',
+    category: 'Data Input',
+    description: 'Field that opens a selectable time list (AstryxTimeOfDay) in a popover.',
+    props: [
+      AstryxProp('value', 'AstryxTimeOfDay?'),
+      AstryxProp('onChanged', 'ValueChanged<AstryxTimeOfDay>?'),
+      AstryxProp('intervalMinutes', 'int', defaultValue: '30'),
+    ],
+    sample: 'AstryxTimeInput(value: t, onChanged: (x) {})',
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxTypeahead',
+    category: 'Data Input',
+    description: 'Text field with a suggestions overlay; ArrowUp/Down highlight, Enter/tap select.',
+    composesWith: ['AstryxTextInput', 'AstryxField'],
+    props: [
+      AstryxProp('suggestions', 'List<T> Function(String)', required: true),
+      AstryxProp('itemLabel', 'String Function(T)', required: true),
+      AstryxProp('onSelected', 'ValueChanged<T>', required: true),
+    ],
+    sample: 'AstryxTypeahead<String>(suggestions: f, itemLabel: (s) => s, onSelected: (x) {})',
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxMultiSelector',
+    category: 'Data Input',
+    description: 'Selects multiple options from a checklist popover; the trigger summarizes the selection.',
+    composesWith: ['AstryxCheckbox'],
+    props: [
+      AstryxProp('options', 'List<AstryxSelectOption<T>>', required: true),
+      AstryxProp('selected', 'Set<T>', required: true),
+      AstryxProp('onChanged', 'ValueChanged<Set<T>>', required: true),
+    ],
+    sample: 'AstryxMultiSelector<String>(options: [...], selected: s, onChanged: (x) {})',
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxTokenizer',
+    category: 'Data Input',
+    description: 'Turns typed entries into removable chips (comma/Enter add, Backspace/✕ remove).',
+    props: [
+      AstryxProp('value', 'List<String>', required: true),
+      AstryxProp('onChanged', 'ValueChanged<List<String>>', required: true),
+    ],
+    sample: 'AstryxTokenizer(value: v, onChanged: (x) {})',
+  ),
+
   // ── Feedback ────────────────────────────────────────────────────────────
   AstryxComponentDoc(
     name: 'AstryxBadge',
@@ -419,5 +489,37 @@ const List<AstryxComponentDoc> astryxRegistry = [
       AstryxProp('duration', 'Duration', defaultValue: '3s'),
     ],
     sample: "showAstryxToast(context, message: 'Saved')",
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxCommandPalette',
+    category: 'Overlay',
+    description: 'Cmd/Ctrl-K modal: search + filtered commands, arrow nav, Enter runs, Esc dismisses.',
+    composesWith: ['AstryxTextInput'],
+    props: [
+      AstryxProp('commands', 'List<AstryxCommand>', required: true, doc: 'Via showAstryxCommandPalette / AstryxCommandPaletteShortcut.'),
+    ],
+    sample: 'showAstryxCommandPalette(context, commands: [...])',
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxHoverCard',
+    category: 'Overlay',
+    description: 'Rich hover content with an open delay that stays while the pointer is over the card.',
+    slots: ['card'],
+    props: [
+      AstryxProp('child', 'Widget', required: true),
+      AstryxProp('card', 'Widget', required: true),
+      AstryxProp('openDelay', 'Duration', defaultValue: '350ms'),
+    ],
+    sample: 'AstryxHoverCard(child: ..., card: ...)',
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxLightbox',
+    category: 'Overlay',
+    description: 'Full-screen zoomable (InteractiveViewer) pager with counter, close and Esc dismiss.',
+    props: [
+      AstryxProp('items', 'List<Widget>', required: true, doc: 'Via showAstryxLightbox.'),
+      AstryxProp('initialIndex', 'int', defaultValue: '0'),
+    ],
+    sample: 'showAstryxLightbox(context, items: [...])',
   ),
 ];

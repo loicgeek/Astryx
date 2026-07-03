@@ -23,17 +23,27 @@ export 'src/navigation/top_nav/astryx_mega_menu.dart';
 export 'src/navigation/top_nav/astryx_top_nav.dart';
 
 // Overlay
+export 'src/overlay/command_palette/astryx_command_palette.dart';
 export 'src/overlay/dialog/astryx_dialog.dart';
+export 'src/overlay/hover_card/astryx_hover_card.dart';
+export 'src/overlay/lightbox/astryx_lightbox.dart';
 export 'src/overlay/popover/astryx_popover.dart';
 export 'src/overlay/toast/astryx_toast.dart';
 export 'src/overlay/tooltip/astryx_tooltip.dart';
 
 // Data Input
+export 'src/data_input/calendar/astryx_calendar.dart';
+export 'src/data_input/calendar/date_utils.dart' show AstryxDates;
 export 'src/data_input/checkbox/astryx_checkbox.dart';
+export 'src/data_input/date_input/astryx_date_input.dart';
 export 'src/data_input/field/astryx_field.dart';
+export 'src/data_input/multi_selector/astryx_multi_selector.dart';
 export 'src/data_input/slider/astryx_slider.dart';
 export 'src/data_input/switch/astryx_switch.dart';
 export 'src/data_input/text_input/astryx_text_input.dart';
+export 'src/data_input/time_input/astryx_time_input.dart';
+export 'src/data_input/tokenizer/astryx_tokenizer.dart';
+export 'src/data_input/typeahead/astryx_typeahead.dart';
 
 // Layout
 export 'src/layout/app_shell/astryx_app_shell.dart';

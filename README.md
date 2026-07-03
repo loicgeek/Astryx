@@ -5,11 +5,16 @@ A Flutter/Dart port of [Meta's Astryx](https://astryx.atmeta.com/) design system
 token-driven theming; source-available components (swizzle-ready); with an
 AI-parity CLI + MCP server planned (see the plan).
 
-> **Status: Jalon 3 + Jalon 7 done.** ~33 components + the full ~10-theme
-> catalog + a responsive App Shell, plus the AI-parity tooling (CLI, manifest,
-> MCP server). Everything analyzes clean and passes tests (61 Flutter + 18 Dart
-> across the workspace). Remaining milestones (rich inputs, tables, chat) are in
-> the plan.
+> **Status: Jalons 0–4 + 7 done.** ~42 components (incl. rich inputs and
+> overlays) + the full ~10-theme catalog + a responsive App Shell, plus the
+> AI-parity tooling (CLI, manifest, MCP server). Everything analyzes clean and
+> passes tests (92 Flutter + 18 Dart across the workspace). The library depends
+> only on Flutter's `widgets` + theme layer — no Material *widgets*. Remaining
+> milestones (tables & lists, chat) are in the plan.
+
+Rich additions in Jalon 4: **Calendar** (DST-safe keyboard grid), **Date/Time
+Input**, **Typeahead**, **Multi Selector**, **Tokenizer**, **Command Palette**
+(⌘K), **Hover Card**, **Lightbox**.
 
 ## AI-parity tooling (the Astryx signature)
 
