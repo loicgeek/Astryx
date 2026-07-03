@@ -6,15 +6,14 @@ void main() {
     await tester.pumpWidget(const AstryxGalleryApp());
     await tester.pump();
 
-    // Renders the neutral header + variant buttons.
-    expect(find.text('Astryx • neutral'), findsOneWidget);
-    expect(find.text('Primary'), findsOneWidget);
+    // App shell renders the content sections and variant buttons.
+    expect(find.text('Navigation'), findsOneWidget);
     expect(find.text('Danger'), findsOneWidget);
 
-    // Light → Dark toggle flips the app theme without throwing.
+    // Light → Dark toggle (in the top nav) flips the app theme without throwing.
     expect(find.text('Dark'), findsOneWidget);
     await tester.tap(find.text('Dark'));
-    // Not pumpAndSettle: the loading button's spinner animates forever.
+    // Not pumpAndSettle: the spinner animates forever.
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 400));
     expect(find.text('Light'), findsOneWidget);

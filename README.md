@@ -5,11 +5,26 @@ A Flutter/Dart port of [Meta's Astryx](https://astryx.atmeta.com/) design system
 token-driven theming; source-available components (swizzle-ready); with an
 AI-parity CLI + MCP server planned (see the plan).
 
-> **Status: Jalon 2 (themes) — done.** Jalon 0 foundations + Jalon 1's ~22
-> components + the full ~10-theme catalog and theme-level component overrides.
-> Everything analyzes clean and passes tests (69 across the workspace).
-> Remaining milestones (navigation, rich inputs, tables, chat, and the CLI/MCP
-> tooling) are in the plan.
+> **Status: Jalon 3 (navigation & structure) — done.** Jalon 0 foundations +
+> ~33 components + the full ~10-theme catalog + a responsive App Shell.
+> Everything analyzes clean and passes tests (79 across the workspace).
+> Remaining milestones (rich inputs, tables, chat, and the CLI/MCP tooling) are
+> in the plan.
+
+## Components (by category)
+
+- **Action**: Button, Segmented Control, Dropdown Menu
+- **Container**: Card (clickable/selectable), Collapsible
+- **Content**: Text, Heading, Avatar, Code / Code Block
+- **Data Input**: Checkbox, Switch, Text Input, Field, Slider
+- **Feedback**: Badge, Status Dot, Spinner, Banner
+- **Layout**: Divider, Section, Grid, Resize Handle, App Shell
+- **Navigation**: Breadcrumbs, Pagination, Tab List, Side Nav, Top Nav, Mega Menu
+- **Overlay**: Tooltip, Popover, Dialog, Toast
+
+The `example/` gallery wires them into a responsive App Shell (top nav + side
+nav) that docks the rail on wide screens and collapses to a drawer on narrow
+ones.
 
 ## Themes
 
