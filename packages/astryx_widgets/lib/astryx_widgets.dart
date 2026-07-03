@@ -23,7 +23,10 @@ export 'src/navigation/top_nav/astryx_mega_menu.dart';
 export 'src/navigation/top_nav/astryx_top_nav.dart';
 
 // Overlay
+export 'src/overlay/command_palette/astryx_command_palette.dart';
 export 'src/overlay/dialog/astryx_dialog.dart';
+export 'src/overlay/hover_card/astryx_hover_card.dart';
+export 'src/overlay/lightbox/astryx_lightbox.dart';
 export 'src/overlay/popover/astryx_popover.dart';
 export 'src/overlay/toast/astryx_toast.dart';
 export 'src/overlay/tooltip/astryx_tooltip.dart';
