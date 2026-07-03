@@ -5,11 +5,22 @@ A Flutter/Dart port of [Meta's Astryx](https://astryx.atmeta.com/) design system
 token-driven theming; source-available components (swizzle-ready); with an
 AI-parity CLI + MCP server planned (see the plan).
 
-> **Status: Jalon 1 (MVP component set) — in progress.** Jalon 0 foundations
-> plus ~22 components across Action, Content, Feedback, Layout, Data Input and
-> Overlay categories. Everything analyzes clean and passes tests (31 across the
-> workspace). Remaining milestones (all ~10 themes, navigation, rich inputs,
-> tables, chat, and the CLI/MCP tooling) are in the plan.
+> **Status: Jalon 2 (themes) — done.** Jalon 0 foundations + Jalon 1's ~22
+> components + the full ~10-theme catalog and theme-level component overrides.
+> Everything analyzes clean and passes tests (69 across the workspace).
+> Remaining milestones (navigation, rich inputs, tables, chat, and the CLI/MCP
+> tooling) are in the plan.
+
+## Themes
+
+Ten ready-made themes — `neutral`, `daily`, `butter`, `chocolate`, `matcha`,
+`stone`, `gothic` (dark-only), `brutalist` (squared corners), `meta`,
+`whatsapp`, `y2k` — each defined as a compact `AstryxThemeSpec` (three seed
+colors per brightness + radius + font) and expanded by `buildAstryxTheme`. The
+derivation guarantees ≥4.5:1 text and ≥3:1 on-accent contrast in light and dark
+(enforced by tests). Swap animates automatically via `AnimatedTheme`. Restyle a
+component globally with the `AstryxComponentStyles` theme extension
+(`tokens ⊕ theme-level ⊕ per-instance` precedence).
 
 ## Components so far
 
