@@ -5,11 +5,13 @@ A Flutter/Dart port of [Meta's Astryx](https://astryx.atmeta.com/) design system
 token-driven theming; source-available components (swizzle-ready); with an
 AI-parity CLI + MCP server planned (see the plan).
 
-> **Status: Jalons 0–5 + 7 done.** ~51 components + the full ~10-theme catalog +
-> a responsive App Shell, plus the AI-parity tooling (CLI, manifest, MCP server).
-> Everything analyzes clean and passes tests (102 Flutter + 18 Dart across the
+> **Status: all functional milestones (Jalons 0–7) done.** ~57 components across
+> 10 categories + the full ~10-theme catalog + a responsive App Shell + the
+> AI-oriented chat set, plus the AI-parity tooling (CLI, manifest, MCP server).
+> Everything analyzes clean and passes tests (107 Flutter + 18 Dart across the
 > workspace). The library depends only on Flutter's `widgets` + theme layer — no
-> Material *widgets*. Remaining milestone (Chat) is in the plan.
+> Material *widgets*. Optional follow-ups: registry auto-harvester, real swizzle,
+> publishing, lints, templates.
 
 Jalon 4 (rich input & overlays): **Calendar** (DST-safe keyboard grid),
 **Date/Time Input**, **Typeahead**, **Multi Selector**, **Tokenizer**, **Command
@@ -18,6 +20,10 @@ Palette** (⌘K), **Hover Card**, **Lightbox**.
 Jalon 5 (data display): **List**, **Table** (sortable), **Tree List**,
 **Carousel**, **Progress Bar**, **Skeleton**, **Blockquote**, **Markdown**,
 **Toolbar**.
+
+Jalon 6 (AI chat): **Chat Message** (Markdown + tool calls), **System Message**,
+**Message Metadata**, **Tool Calls** (agent tool panels), **Composer**
+(Enter-to-send), **Layout** (auto-scroll + streaming).
 
 ## AI-parity tooling (the Astryx signature)
 

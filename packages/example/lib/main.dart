@@ -189,6 +189,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
               _inputs(t),
               _feedback(context, t),
               _overlays(context, t),
+              _chat(t),
             ],
           ),
         ),
@@ -285,6 +286,39 @@ class _GalleryScreenState extends State<GalleryScreen> {
           ),
           const AstryxMarkdown('Supports **bold**, `code`, and [links](https://astryx.dev). '
               '\n\n> Rendered with Astryx components.'),
+        ],
+      ),
+    );
+  }
+
+  Widget _chat(AstryxTokens t) {
+    return AstryxSection(
+      title: 'Chat',
+      description: 'Message bubbles, tool calls, metadata and a composer.',
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const AstryxChatSystemMessage('Today'),
+          const AstryxChatMessage(role: AstryxChatRole.user, content: 'Show me the Q2 sales.'),
+          AstryxChatMessage(
+            role: AstryxChatRole.assistant,
+            avatar: const AstryxAvatar(initials: 'AI', label: 'Assistant', size: AstryxAvatarSize.sm),
+            content: 'Here are the **Q2** results:\n\n'
+                '- Revenue up 12%\n'
+                '- Churn down\n\n'
+                'Pulled with `query_sales`.',
+            toolCalls: const AstryxChatToolCalls(calls: [
+              AstryxToolCall(
+                name: 'query_sales',
+                status: AstryxToolStatus.success,
+                arguments: '{ "quarter": "Q2" }',
+                result: '42 rows',
+              ),
+            ]),
+            metadata: const AstryxChatMessageMetadata(timestamp: '12:04', model: 'opus-4.8'),
+          ),
+          SizedBox(height: t.spacing.gapMd),
+          AstryxChatComposer(onSend: (_) {}),
         ],
       ),
     );
