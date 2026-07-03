@@ -60,6 +60,9 @@ AstryxTypographyTokens _typography(String family, Color text, Color muted) {
         fontWeight: weight,
         height: height,
         color: color,
+        // Explicit so text never inherits the framework's amber debug underline
+        // when rendered without a DefaultTextStyle (e.g. inside an Overlay).
+        decoration: TextDecoration.none,
         leadingDistribution: TextLeadingDistribution.even,
       );
   return AstryxTypographyTokens(

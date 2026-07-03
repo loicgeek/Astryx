@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:astryx_foundations/astryx_foundations.dart';
 import 'package:astryx_tokens/astryx_tokens.dart';
 import 'package:flutter/widgets.dart';
 
@@ -126,7 +127,8 @@ class _ToastCardState extends State<_ToastCard> with SingleTickerProviderStateMi
               child: Semantics(
                 liveRegion: true,
                 container: true,
-                child: Container(
+                child: AstryxTextDefaults(
+                  child: Container(
                   margin: EdgeInsets.symmetric(horizontal: t.spacing.insetLg),
                   padding: EdgeInsets.symmetric(
                     horizontal: t.spacing.insetMd,
@@ -142,6 +144,7 @@ class _ToastCardState extends State<_ToastCard> with SingleTickerProviderStateMi
                     widget.message,
                     style: t.typography.body.copyWith(color: t.color.textDefault),
                   ),
+                ),
                 ),
               ),
             ),

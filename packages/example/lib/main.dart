@@ -159,6 +159,13 @@ class _GalleryScreenState extends State<GalleryScreen> {
     );
   }
 
+  String get _navLabel => switch (_nav) {
+        'themes' => 'Themes',
+        'tokens' => 'Tokens',
+        'settings' => 'Settings',
+        _ => 'Components',
+      };
+
   Widget _content(AstryxTokens t) {
     return SingleChildScrollView(
       padding: EdgeInsets.all(t.spacing.insetLg),
@@ -172,8 +179,10 @@ class _GalleryScreenState extends State<GalleryScreen> {
               AstryxBreadcrumbs(items: [
                 AstryxCrumb(label: 'Astryx', onTap: () {}),
                 AstryxCrumb(label: 'Gallery', onTap: () {}),
-                AstryxCrumb(label: widget.themeName),
+                AstryxCrumb(label: _navLabel),
               ]),
+              AstryxHeading(_navLabel, level: AstryxHeadingLevel.display),
+              AstryxText('Section “$_navLabel” · theme “${widget.themeName}”.', tone: AstryxTextTone.muted),
               _navigation(t),
               _actions(t),
               _inputs(t),
