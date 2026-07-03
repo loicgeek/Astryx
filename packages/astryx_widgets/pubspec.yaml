@@ -1,0 +1,21 @@
+name: astryx_widgets
+description: Astryx UI components for Flutter. Source-available (swizzle-ready). Each component depends only on astryx_tokens + astryx_foundations.
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: ^3.11.0
+  flutter: ">=3.41.0"
+
+resolution: workspace
+
+dependencies:
+  flutter:
+    sdk: flutter
+  astryx_tokens:
+  astryx_foundations:
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  astryx_themes: # test-only: real theme bundle for pumping components

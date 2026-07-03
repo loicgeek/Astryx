@@ -1,0 +1,16 @@
+# Swizzle manifest for AstryxButton — consumed by `astryx swizzle button` to
+# know exactly what to copy into the consumer repo and how to rewrite imports.
+component: AstryxButton
+category: action
+files:
+  - astryx_button.dart
+  - astryx_button_style.dart
+# Only tokens + foundations — no sibling-widget coupling, so the eject is clean.
+dependencies:
+  - astryx_tokens
+  - astryx_foundations
+publicApi:
+  - AstryxButton
+  - AstryxButtonStyle
+  - AstryxButtonVariant
+  - AstryxButtonSize
