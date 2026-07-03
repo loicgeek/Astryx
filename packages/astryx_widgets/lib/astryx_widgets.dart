@@ -60,6 +60,8 @@ export 'src/layout/section/astryx_section.dart';
 // Feedback
 export 'src/feedback/badge/astryx_badge.dart';
 export 'src/feedback/banner/astryx_banner.dart';
+export 'src/feedback/progress_bar/astryx_progress_bar.dart';
+export 'src/feedback/skeleton/astryx_skeleton.dart';
 export 'src/feedback/spinner/astryx_spinner.dart';
 
 // Container
@@ -68,6 +70,8 @@ export 'src/container/collapsible/astryx_collapsible.dart';
 
 // Content
 export 'src/content/avatar/astryx_avatar.dart';
+export 'src/content/blockquote/astryx_blockquote.dart';
 export 'src/content/code/astryx_code.dart';
 export 'src/content/heading/astryx_heading.dart';
+export 'src/content/markdown/astryx_markdown.dart';
 export 'src/content/text/astryx_text.dart';
