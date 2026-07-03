@@ -1,0 +1,17 @@
+name: astryx_flutter_workspace
+publish_to: none
+
+environment:
+  sdk: ^3.11.0
+
+# Dart pub workspace: single shared lockfile + resolution across all packages.
+# Melos (see melos.yaml) layers scripting (gen/test/golden/analyze/publish) on top.
+workspace:
+  - packages/astryx_tokens
+  - packages/astryx_foundations
+  - packages/astryx_widgets
+  - packages/astryx_themes
+  - packages/example
+
+dev_dependencies:
+  melos: ^6.3.0

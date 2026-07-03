@@ -1,0 +1,33 @@
+name: astryx
+
+packages:
+  - packages/**
+
+command:
+  bootstrap:
+    # Use pub workspace resolution (shared lockfile at the repo root).
+    environment:
+      sdk: ^3.11.0
+
+scripts:
+  analyze:
+    description: Static analysis across all packages.
+    exec: dart analyze --fatal-infos
+
+  test:
+    description: Run widget + unit tests (incl. semantics assertions).
+    exec: flutter test
+    packageFilters:
+      dirExists: test
+
+  golden:
+    description: Regenerate golden files.
+    exec: flutter test --update-goldens
+    packageFilters:
+      dirExists: test
+
+  gen:
+    description: Run all code generation (tokens, registry, freezed).
+    exec: dart run build_runner build --delete-conflicting-outputs
+    packageFilters:
+      dependsOn: build_runner
