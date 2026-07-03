@@ -17,7 +17,10 @@ export 'src/action/segmented_control/astryx_segmented_control.dart';
 // Navigation
 export 'src/navigation/breadcrumbs/astryx_breadcrumbs.dart';
 export 'src/navigation/pagination/astryx_pagination.dart';
+export 'src/navigation/side_nav/astryx_side_nav.dart';
 export 'src/navigation/tab_list/astryx_tab_list.dart';
+export 'src/navigation/top_nav/astryx_mega_menu.dart';
+export 'src/navigation/top_nav/astryx_top_nav.dart';
 
 // Overlay
 export 'src/overlay/dialog/astryx_dialog.dart';
@@ -33,8 +36,10 @@ export 'src/data_input/switch/astryx_switch.dart';
 export 'src/data_input/text_input/astryx_text_input.dart';
 
 // Layout
+export 'src/layout/app_shell/astryx_app_shell.dart';
 export 'src/layout/divider/astryx_divider.dart';
 export 'src/layout/grid/astryx_grid.dart';
+export 'src/layout/resize_handle/astryx_resize_handle.dart';
 export 'src/layout/section/astryx_section.dart';
 
 // Feedback
