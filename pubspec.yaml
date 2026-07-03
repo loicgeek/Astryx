@@ -11,6 +11,9 @@ workspace:
   - packages/astryx_foundations
   - packages/astryx_widgets
   - packages/astryx_themes
+  - packages/astryx_core
+  - packages/astryx_cli
+  - packages/astryx_mcp
   - packages/example
 
 dev_dependencies:

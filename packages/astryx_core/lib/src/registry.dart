@@ -1,0 +1,423 @@
+import 'model.dart';
+
+/// The Astryx component registry — the single source of truth the CLI and MCP
+/// server read. (Props are curated here today; the planned `tool/gen_registry`
+/// analyzer harvester will auto-populate them from the widget constructors so
+/// they can never drift from the real API.)
+const List<AstryxComponentDoc> astryxRegistry = [
+  // ── Action ──────────────────────────────────────────────────────────────
+  AstryxComponentDoc(
+    name: 'AstryxButton',
+    category: 'Action',
+    a11yRole: 'button',
+    description: 'A branded, accessible action button with variants, sizes and loading state.',
+    composesWith: ['Toolbar', 'Dialog', 'AstryxField'],
+    slots: ['leading', 'trailing'],
+    props: [
+      AstryxProp('label', 'String', required: true, doc: 'Text label and default accessible name.'),
+      AstryxProp('onPressed', 'VoidCallback?', doc: 'Null renders the button disabled.'),
+      AstryxProp('variant', 'AstryxButtonVariant', defaultValue: 'primary'),
+      AstryxProp('size', 'AstryxButtonSize', defaultValue: 'md'),
+      AstryxProp('loading', 'bool', defaultValue: 'false'),
+      AstryxProp('style', 'AstryxButtonStyle?', doc: 'Per-instance paint override.'),
+    ],
+    sample: "AstryxButton(label: 'Save', onPressed: () {})",
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxSegmentedControl',
+    category: 'Action',
+    a11yRole: 'radiogroup',
+    description: 'Single-select inline control; arrow keys move the selection.',
+    props: [
+      AstryxProp('segments', 'List<AstryxSegment<T>>', required: true),
+      AstryxProp('value', 'T', required: true),
+      AstryxProp('onChanged', 'ValueChanged<T>?'),
+    ],
+    sample: "AstryxSegmentedControl<String>(value: v, onChanged: (x) {}, segments: [...])",
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxDropdownMenu',
+    category: 'Action',
+    a11yRole: 'menu',
+    description: 'Button-triggered menu with keyboard navigation and outside/Esc dismiss.',
+    slots: ['trigger'],
+    props: [
+      AstryxProp('trigger', 'Widget', required: true),
+      AstryxProp('items', 'List<AstryxMenuItem<T>>', required: true),
+      AstryxProp('onSelected', 'ValueChanged<T>', required: true),
+    ],
+    sample: "AstryxDropdownMenu<String>(trigger: ..., items: [...], onSelected: (x) {})",
+  ),
+
+  // ── Container ───────────────────────────────────────────────────────────
+  AstryxComponentDoc(
+    name: 'AstryxCard',
+    category: 'Container',
+    description: 'Surface container; becomes clickable/selectable when onTap is set.',
+    props: [
+      AstryxProp('child', 'Widget', required: true),
+      AstryxProp('variant', 'AstryxCardVariant', defaultValue: 'outlined'),
+      AstryxProp('onTap', 'VoidCallback?'),
+      AstryxProp('selected', 'bool', defaultValue: 'false'),
+    ],
+    sample: "AstryxCard(child: Text('...'))",
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxCollapsible',
+    category: 'Container',
+    a11yRole: 'button',
+    description: 'Disclosure that expands/collapses its child under a tappable title.',
+    props: [
+      AstryxProp('title', 'String', required: true),
+      AstryxProp('child', 'Widget', required: true),
+      AstryxProp('initiallyExpanded', 'bool', defaultValue: 'false'),
+    ],
+    sample: "AstryxCollapsible(title: 'Details', child: Text('...'))",
+  ),
+
+  // ── Content ─────────────────────────────────────────────────────────────
+  AstryxComponentDoc(
+    name: 'AstryxText',
+    category: 'Content',
+    description: 'Themed text with typography variants and semantic tones.',
+    props: [
+      AstryxProp('data', 'String', required: true),
+      AstryxProp('variant', 'AstryxTextVariant', defaultValue: 'body'),
+      AstryxProp('tone', 'AstryxTextTone', defaultValue: 'normal'),
+    ],
+    sample: "AstryxText('Hello', tone: AstryxTextTone.muted)",
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxHeading',
+    category: 'Content',
+    a11yRole: 'header',
+    description: 'Section heading with a proper header semantics role.',
+    props: [
+      AstryxProp('data', 'String', required: true),
+      AstryxProp('level', 'AstryxHeadingLevel', defaultValue: 'h1'),
+    ],
+    sample: "AstryxHeading('Settings', level: AstryxHeadingLevel.h2)",
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxAvatar',
+    category: 'Content',
+    a11yRole: 'image',
+    description: 'User/entity representation: image, else initials, else a fallback glyph.',
+    props: [
+      AstryxProp('label', 'String', required: true, doc: 'Accessible name.'),
+      AstryxProp('image', 'ImageProvider?'),
+      AstryxProp('initials', 'String?'),
+      AstryxProp('size', 'AstryxAvatarSize', defaultValue: 'md'),
+    ],
+    sample: "AstryxAvatar(initials: 'Ada Lovelace', label: 'Ada Lovelace')",
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxCode',
+    category: 'Content',
+    description: 'Inline monospace code span.',
+    props: [AstryxProp('code', 'String', required: true)],
+    sample: "AstryxCode('flutter run')",
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxCodeBlock',
+    category: 'Content',
+    description: 'Multi-line, horizontally scrollable code block.',
+    props: [
+      AstryxProp('code', 'String', required: true),
+      AstryxProp('language', 'String?'),
+    ],
+    sample: "AstryxCodeBlock('final x = 1;', language: 'dart')",
+  ),
+
+  // ── Data Input ──────────────────────────────────────────────────────────
+  AstryxComponentDoc(
+    name: 'AstryxCheckbox',
+    category: 'Data Input',
+    a11yRole: 'checkbox',
+    description: 'Controlled checkbox with tap/keyboard toggle and a focus ring.',
+    composesWith: ['AstryxField'],
+    props: [
+      AstryxProp('value', 'bool', required: true),
+      AstryxProp('onChanged', 'ValueChanged<bool>?'),
+      AstryxProp('label', 'String?'),
+    ],
+    sample: "AstryxCheckbox(value: v, label: 'Accept', onChanged: (x) {})",
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxSwitch',
+    category: 'Data Input',
+    a11yRole: 'switch',
+    description: 'Animated on/off switch with toggle semantics.',
+    props: [
+      AstryxProp('value', 'bool', required: true),
+      AstryxProp('onChanged', 'ValueChanged<bool>?'),
+      AstryxProp('semanticLabel', 'String', required: true),
+    ],
+    sample: "AstryxSwitch(value: v, semanticLabel: 'Wifi', onChanged: (x) {})",
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxTextInput',
+    category: 'Data Input',
+    a11yRole: 'textField',
+    description: 'Single-line field with the Astryx frame, focus ring and error state.',
+    composesWith: ['AstryxField'],
+    slots: ['leading', 'trailing'],
+    props: [
+      AstryxProp('controller', 'TextEditingController?'),
+      AstryxProp('hintText', 'String?'),
+      AstryxProp('onChanged', 'ValueChanged<String>?'),
+      AstryxProp('hasError', 'bool', defaultValue: 'false'),
+    ],
+    sample: "AstryxTextInput(hintText: 'Name', onChanged: (x) {})",
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxField',
+    category: 'Data Input',
+    description: 'Form field scaffold: label (+required), description, input and error.',
+    composesWith: ['AstryxTextInput', 'AstryxCheckbox', 'AstryxSlider'],
+    slots: ['child'],
+    props: [
+      AstryxProp('label', 'String', required: true),
+      AstryxProp('child', 'Widget', required: true),
+      AstryxProp('error', 'String?'),
+      AstryxProp('required', 'bool', defaultValue: 'false'),
+    ],
+    sample: "AstryxField(label: 'Email', child: AstryxTextInput())",
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxSlider',
+    category: 'Data Input',
+    a11yRole: 'slider',
+    description: 'Custom slider with drag + arrow/Home/End keys and slider semantics.',
+    props: [
+      AstryxProp('value', 'double', required: true),
+      AstryxProp('onChanged', 'ValueChanged<double>?'),
+      AstryxProp('divisions', 'int?'),
+      AstryxProp('semanticLabel', 'String', required: true),
+    ],
+    sample: "AstryxSlider(value: v, semanticLabel: 'Volume', onChanged: (x) {})",
+  ),
+
+  // ── Feedback ────────────────────────────────────────────────────────────
+  AstryxComponentDoc(
+    name: 'AstryxBadge',
+    category: 'Feedback',
+    description: 'Compact status/count pill with a semantic tone.',
+    props: [
+      AstryxProp('label', 'String', required: true),
+      AstryxProp('tone', 'AstryxTone', defaultValue: 'neutral'),
+    ],
+    sample: "AstryxBadge('New', tone: AstryxTone.accent)",
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxStatusDot',
+    category: 'Feedback',
+    description: 'A labeled status dot (never color-alone).',
+    props: [
+      AstryxProp('label', 'String', required: true),
+      AstryxProp('tone', 'AstryxTone', defaultValue: 'neutral'),
+    ],
+    sample: "AstryxStatusDot(tone: AstryxTone.success, label: 'Online')",
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxSpinner',
+    category: 'Feedback',
+    description: 'Indeterminate loading ring; honors reduced motion, announces busy.',
+    props: [
+      AstryxProp('size', 'AstryxSpinnerSize', defaultValue: 'md'),
+      AstryxProp('label', 'String', defaultValue: 'Loading'),
+    ],
+    sample: 'AstryxSpinner()',
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxBanner',
+    category: 'Feedback',
+    description: 'Tonal inline message with accent bar, icon/actions slots and dismiss.',
+    slots: ['icon', 'actions'],
+    props: [
+      AstryxProp('message', 'String', required: true),
+      AstryxProp('title', 'String?'),
+      AstryxProp('tone', 'AstryxTone', defaultValue: 'accent'),
+      AstryxProp('onDismiss', 'VoidCallback?'),
+    ],
+    sample: "AstryxBanner(message: 'Saved', tone: AstryxTone.success)",
+  ),
+
+  // ── Layout ──────────────────────────────────────────────────────────────
+  AstryxComponentDoc(
+    name: 'AstryxDivider',
+    category: 'Layout',
+    description: 'Hairline separator, optional centered label.',
+    props: [
+      AstryxProp('axis', 'Axis', defaultValue: 'horizontal'),
+      AstryxProp('label', 'String?'),
+    ],
+    sample: 'AstryxDivider()',
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxSection',
+    category: 'Layout',
+    description: 'Titled content block (header role) with description + trailing slot.',
+    slots: ['trailing', 'child'],
+    props: [
+      AstryxProp('title', 'String', required: true),
+      AstryxProp('child', 'Widget', required: true),
+      AstryxProp('description', 'String?'),
+    ],
+    sample: "AstryxSection(title: 'Members', child: ...)",
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxGrid',
+    category: 'Layout',
+    description: 'Container-query responsive grid with token-gapped equal tracks.',
+    props: [
+      AstryxProp('children', 'List<Widget>', required: true),
+      AstryxProp('columns', 'ResponsiveValue<int>'),
+      AstryxProp('gap', 'double?'),
+    ],
+    sample: 'AstryxGrid(children: [...])',
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxResizeHandle',
+    category: 'Layout',
+    description: 'Draggable divider emitting signed deltas; arrow-key nudge, resize cursor.',
+    props: [
+      AstryxProp('onResize', 'ValueChanged<double>', required: true),
+      AstryxProp('axis', 'Axis', defaultValue: 'vertical'),
+      AstryxProp('semanticLabel', 'String', required: true),
+    ],
+    sample: "AstryxResizeHandle(onResize: (d) {}, semanticLabel: 'Resize')",
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxAppShell',
+    category: 'Layout',
+    description: 'Responsive scaffold: docked rail when wide, slide-in drawer when compact.',
+    composesWith: ['AstryxTopNav', 'AstryxSideNav'],
+    slots: ['topNav', 'sideNav', 'content'],
+    props: [
+      AstryxProp('sideNav', 'Widget', required: true),
+      AstryxProp('content', 'Widget', required: true),
+      AstryxProp('topNav', 'Widget?'),
+      AstryxProp('breakpoint', 'double', defaultValue: '1024'),
+    ],
+    sample: 'AstryxAppShell(sideNav: ..., content: ...)',
+  ),
+
+  // ── Navigation ──────────────────────────────────────────────────────────
+  AstryxComponentDoc(
+    name: 'AstryxBreadcrumbs',
+    category: 'Navigation',
+    description: 'Link trail that wraps; the last crumb is the current page.',
+    props: [AstryxProp('items', 'List<AstryxCrumb>', required: true)],
+    sample: "AstryxBreadcrumbs(items: [AstryxCrumb(label: 'Home', onTap: () {})])",
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxPagination',
+    category: 'Navigation',
+    description: 'Prev/next + windowed page numbers with ellipsis.',
+    props: [
+      AstryxProp('page', 'int', required: true),
+      AstryxProp('pageCount', 'int', required: true),
+      AstryxProp('onChanged', 'ValueChanged<int>?'),
+    ],
+    sample: 'AstryxPagination(page: 1, pageCount: 20, onChanged: (p) {})',
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxTabList',
+    category: 'Navigation',
+    a11yRole: 'tablist',
+    description: 'Animated-underline tablist; arrow keys move the active tab.',
+    props: [
+      AstryxProp('tabs', 'List<AstryxTab<T>>', required: true),
+      AstryxProp('value', 'T', required: true),
+      AstryxProp('onChanged', 'ValueChanged<T>?'),
+    ],
+    sample: 'AstryxTabList<String>(tabs: [...], value: v, onChanged: (x) {})',
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxSideNav',
+    category: 'Navigation',
+    description: 'Vertical nav rail with grouped sections; selected highlight; collapsible.',
+    composesWith: ['AstryxAppShell'],
+    slots: ['header', 'footer'],
+    props: [
+      AstryxProp('sections', 'List<AstryxNavSection<T>>', required: true),
+      AstryxProp('selected', 'T?'),
+      AstryxProp('onSelect', 'ValueChanged<T>?'),
+      AstryxProp('collapsed', 'bool', defaultValue: 'false'),
+    ],
+    sample: 'AstryxSideNav<String>(sections: [...], selected: v, onSelect: (x) {})',
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxTopNav',
+    category: 'Navigation',
+    description: 'Top bar with brand, inline items and actions; hamburger when compact.',
+    composesWith: ['AstryxAppShell', 'AstryxMegaMenu'],
+    slots: ['leading', 'items', 'actions'],
+    props: [
+      AstryxProp('leading', 'Widget?'),
+      AstryxProp('items', 'List<Widget>', defaultValue: 'const []'),
+      AstryxProp('actions', 'List<Widget>', defaultValue: 'const []'),
+    ],
+    sample: 'AstryxTopNav(leading: ..., items: [...], actions: [...])',
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxMegaMenu',
+    category: 'Navigation',
+    description: 'Multi-column overlay panel; opens on hover (pointer) or tap.',
+    props: [
+      AstryxProp('label', 'String', required: true),
+      AstryxProp('columns', 'List<AstryxMegaColumn>', required: true),
+    ],
+    sample: "AstryxMegaMenu(label: 'Products', columns: [...])",
+  ),
+
+  // ── Overlay ─────────────────────────────────────────────────────────────
+  AstryxComponentDoc(
+    name: 'AstryxTooltip',
+    category: 'Overlay',
+    description: 'Contextual label on hover (desktop) or long-press (touch).',
+    props: [
+      AstryxProp('message', 'String', required: true),
+      AstryxProp('child', 'Widget', required: true),
+    ],
+    sample: "AstryxTooltip(message: 'Info', child: ...)",
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxPopover',
+    category: 'Overlay',
+    description: 'Anchored floating panel with controller; outside-tap + Esc dismiss.',
+    slots: ['anchor'],
+    props: [
+      AstryxProp('anchor', 'Widget', required: true),
+      AstryxProp('builder', 'WidgetBuilder', required: true),
+      AstryxProp('controller', 'AstryxPopoverController?'),
+    ],
+    sample: 'AstryxPopover(anchor: ..., builder: (ctx) => ...)',
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxDialog',
+    category: 'Overlay',
+    a11yRole: 'dialog',
+    description: 'Modal surface presented via showAstryxDialog; focus trap + Esc.',
+    composesWith: ['AstryxButton'],
+    slots: ['content', 'actions'],
+    props: [
+      AstryxProp('title', 'String?'),
+      AstryxProp('content', 'Widget', required: true),
+      AstryxProp('actions', 'List<Widget>', defaultValue: 'const []'),
+    ],
+    sample: "showAstryxDialog(context: context, builder: (_) => AstryxDialog(content: ...))",
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxToast',
+    category: 'Overlay',
+    description: 'Transient stacked live-region messages via showAstryxToast.',
+    props: [
+      AstryxProp('message', 'String', required: true),
+      AstryxProp('tone', 'AstryxTone', defaultValue: 'neutral'),
+      AstryxProp('duration', 'Duration', defaultValue: '3s'),
+    ],
+    sample: "showAstryxToast(context, message: 'Saved')",
+  ),
+];

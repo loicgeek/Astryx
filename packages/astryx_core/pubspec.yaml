@@ -1,0 +1,12 @@
+name: astryx_core
+description: Shared Astryx tooling core — the component registry (single source of truth), the manifest builder, and template/swizzle services used by both the CLI and the MCP server.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.11.0
+
+resolution: workspace
+
+dev_dependencies:
+  test: ^1.25.0
