@@ -8,3 +8,9 @@ library astryx_widgets;
 // Action
 export 'src/action/button/astryx_button.dart';
 export 'src/action/button/astryx_button_style.dart';
+
+// Content
+export 'src/content/avatar/astryx_avatar.dart';
+export 'src/content/code/astryx_code.dart';
+export 'src/content/heading/astryx_heading.dart';
+export 'src/content/text/astryx_text.dart';
