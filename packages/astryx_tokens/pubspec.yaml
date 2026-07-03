@@ -1,0 +1,18 @@
+name: astryx_tokens
+description: Astryx design tokens for Flutter — primitive constants + semantic ThemeExtensions. Generated from /tokens (DTCG JSON).
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: ^3.11.0
+  flutter: ">=3.41.0"
+
+resolution: workspace
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter

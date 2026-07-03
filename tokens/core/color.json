@@ -1,0 +1,43 @@
+{
+  "$description": "Primitive color ramps (tier 1). Raw values only — never consumed directly by components; semantic tokens (see tokens/themes/*) reference these.",
+  "color": {
+    "$type": "color",
+    "white": { "$value": "#ffffff" },
+    "black": { "$value": "#0a0a0a" },
+    "neutral": {
+      "0":   { "$value": "#ffffff" },
+      "50":  { "$value": "#f7f7f8" },
+      "100": { "$value": "#ededf0" },
+      "200": { "$value": "#d9d9de" },
+      "300": { "$value": "#b9b9c1" },
+      "400": { "$value": "#8e8e99" },
+      "500": { "$value": "#6b6b76" },
+      "600": { "$value": "#52525b" },
+      "700": { "$value": "#3f3f46" },
+      "800": { "$value": "#27272b" },
+      "900": { "$value": "#18181b" },
+      "950": { "$value": "#0f0f11" }
+    },
+    "blue": {
+      "300": { "$value": "#8ab4ff" },
+      "400": { "$value": "#5c93ff" },
+      "500": { "$value": "#2f6bff" },
+      "600": { "$value": "#1e50e6" },
+      "700": { "$value": "#183fb4" }
+    },
+    "red": {
+      "400": { "$value": "#ff6b6b" },
+      "500": { "$value": "#e5484d" },
+      "600": { "$value": "#c23b3f" }
+    },
+    "green": {
+      "400": { "$value": "#3dd68c" },
+      "500": { "$value": "#2fa96f" },
+      "600": { "$value": "#248257" }
+    },
+    "amber": {
+      "400": { "$value": "#ffbf47" },
+      "500": { "$value": "#f5a623" }
+    }
+  }
+}

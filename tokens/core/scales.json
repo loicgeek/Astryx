@@ -1,0 +1,40 @@
+{
+  "$description": "Primitive non-color scales (tier 1): spacing, radius, motion durations/easings, elevation. Referenced by semantic theme tokens.",
+  "space": {
+    "$type": "dimension",
+    "0":  { "$value": 0 },
+    "1":  { "$value": 2 },
+    "2":  { "$value": 4 },
+    "3":  { "$value": 8 },
+    "4":  { "$value": 12 },
+    "5":  { "$value": 16 },
+    "6":  { "$value": 20 },
+    "7":  { "$value": 24 },
+    "8":  { "$value": 32 },
+    "9":  { "$value": 40 },
+    "10": { "$value": 48 }
+  },
+  "radius": {
+    "$type": "dimension",
+    "none": { "$value": 0 },
+    "sm":   { "$value": 4 },
+    "md":   { "$value": 8 },
+    "lg":   { "$value": 12 },
+    "xl":   { "$value": 16 },
+    "full": { "$value": 9999 }
+  },
+  "duration": {
+    "$type": "duration",
+    "instant": { "$value": 0 },
+    "fast":    { "$value": 120 },
+    "normal":  { "$value": 200 },
+    "slow":    { "$value": 320 }
+  },
+  "easing": {
+    "$type": "cubicBezier",
+    "standard":    { "$value": [0.2, 0.0, 0.0, 1.0] },
+    "emphasized":  { "$value": [0.2, 0.0, 0.0, 1.0] },
+    "decelerate":  { "$value": [0.0, 0.0, 0.2, 1.0] },
+    "accelerate":  { "$value": [0.4, 0.0, 1.0, 1.0] }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "$description": "Semantic tokens (tier 2) for the 'neutral' theme. Components read ONLY these role-based names; each theme re-points them. Values reference tier-1 primitives by path, with { light, dark } brightness variants.",
+  "theme": {
+    "name": "neutral",
+    "color": {
+      "surface": {
+        "default":  { "light": "{color.neutral.0}",   "dark": "{color.neutral.950}" },
+        "raised":   { "light": "{color.neutral.0}",   "dark": "{color.neutral.900}" },
+        "sunken":   { "light": "{color.neutral.50}",  "dark": "{color.neutral.900}" },
+        "overlay":  { "light": "{color.neutral.0}",   "dark": "{color.neutral.800}" }
+      },
+      "text": {
+        "default":   { "light": "{color.neutral.900}", "dark": "{color.neutral.50}" },
+        "muted":     { "light": "{color.neutral.500}", "dark": "{color.neutral.400}" },
+        "onAccent":  { "light": "{color.white}",       "dark": "{color.white}" },
+        "disabled":  { "light": "{color.neutral.300}", "dark": "{color.neutral.600}" }
+      },
+      "border": {
+        "default":   { "light": "{color.neutral.200}", "dark": "{color.neutral.700}" },
+        "strong":    { "light": "{color.neutral.300}", "dark": "{color.neutral.600}" },
+        "focus":     { "light": "{color.blue.500}",    "dark": "{color.blue.400}" }
+      },
+      "accent": {
+        "default":   { "light": "{color.blue.500}",  "dark": "{color.blue.400}" },
+        "hover":     { "light": "{color.blue.600}",  "dark": "{color.blue.300}" },
+        "pressed":   { "light": "{color.blue.700}",  "dark": "{color.blue.500}" }
+      },
+      "danger":    { "light": "{color.red.500}",   "dark": "{color.red.400}" },
+      "success":   { "light": "{color.green.500}", "dark": "{color.green.400}" },
+      "warning":   { "light": "{color.amber.500}", "dark": "{color.amber.400}" }
+    },
+    "typography": {
+      "fontFamily": "Inter",
+      "display": { "size": 32, "weight": 700, "height": 1.2 },
+      "heading": { "size": 22, "weight": 600, "height": 1.25 },
+      "body":    { "size": 15, "weight": 400, "height": 1.45 },
+      "label":   { "size": 13, "weight": 500, "height": 1.3 },
+      "code":    { "size": 13, "weight": 400, "height": 1.5, "fontFamily": "monospace" }
+    }
+  }
+}
