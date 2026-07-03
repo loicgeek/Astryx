@@ -1,0 +1,19 @@
+name: astryx_themes
+description: Concrete Astryx theme bundles (neutral, …) — each an AstryxThemeData with light + dark ThemeData carrying all token extensions.
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: ^3.11.0
+  flutter: ">=3.41.0"
+
+resolution: workspace
+
+dependencies:
+  flutter:
+    sdk: flutter
+  astryx_tokens:
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
