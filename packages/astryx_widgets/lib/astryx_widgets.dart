@@ -29,11 +29,15 @@ export 'src/overlay/toast/astryx_toast.dart';
 export 'src/overlay/tooltip/astryx_tooltip.dart';
 
 // Data Input
+export 'src/data_input/calendar/astryx_calendar.dart';
+export 'src/data_input/calendar/date_utils.dart' show AstryxDates;
 export 'src/data_input/checkbox/astryx_checkbox.dart';
+export 'src/data_input/date_input/astryx_date_input.dart';
 export 'src/data_input/field/astryx_field.dart';
 export 'src/data_input/slider/astryx_slider.dart';
 export 'src/data_input/switch/astryx_switch.dart';
 export 'src/data_input/text_input/astryx_text_input.dart';
+export 'src/data_input/time_input/astryx_time_input.dart';
 
 // Layout
 export 'src/layout/app_shell/astryx_app_shell.dart';
