@@ -1,3 +1,4 @@
+import 'package:astryx_foundations/astryx_foundations.dart';
 import 'package:astryx_themes/astryx_themes.dart';
 import 'package:astryx_tokens/astryx_tokens.dart';
 import 'package:astryx_widgets/astryx_widgets.dart';
@@ -18,8 +19,6 @@ class _AstryxGalleryAppState extends State<AstryxGalleryApp> {
 
   @override
   Widget build(BuildContext context) {
-    // MaterialApp wraps this in an AnimatedTheme, so swapping theme/mode lerps
-    // the token extensions (colors, spacing, shape) for a smooth transition.
     final theme = AstryxThemeCatalog.build(_spec);
     return MaterialApp(
       title: 'Astryx Gallery',
@@ -32,9 +31,7 @@ class _AstryxGalleryAppState extends State<AstryxGalleryApp> {
         themeNames: [for (final s in AstryxThemeCatalog.specs) s.name],
         onSelectTheme: (name) => setState(() => _spec = AstryxThemeCatalog.specs.firstWhere((s) => s.name == name)),
         isDark: _mode == ThemeMode.dark,
-        onToggleMode: () => setState(() {
-          _mode = _mode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
-        }),
+        onToggleMode: () => setState(() => _mode = _mode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light),
       ),
     );
   }
@@ -61,6 +58,9 @@ class GalleryScreen extends StatefulWidget {
 }
 
 class _GalleryScreenState extends State<GalleryScreen> {
+  String _nav = 'components';
+  String _tab = 'overview';
+  int _page = 3;
   bool _checked = true;
   bool _switched = false;
   double _volume = 0.4;
@@ -78,88 +78,153 @@ class _GalleryScreenState extends State<GalleryScreen> {
     final t = context.tokens;
     return Scaffold(
       backgroundColor: t.color.surfaceDefault,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.all(t.spacing.insetLg),
-          child: Center(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 720),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: t.spacing.gapLg,
-                children: [
-                  _header(t),
-                  const AstryxDivider(),
-                  _content(t),
-                  _actions(t),
-                  _inputs(t),
-                  _feedback(context, t),
-                  _overlays(context, t),
-                ],
-              ),
-            ),
-          ),
-        ),
+      body: AstryxAppShell(
+        breakpoint: 900,
+        sideNavWidth: 240,
+        topNav: _topNav(t),
+        sideNav: _sideNav(t),
+        content: _content(t),
       ),
     );
   }
 
-  Widget _header(AstryxTokens t) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Flexible(
-          child: Row(
-            spacing: t.spacing.gapMd,
-            children: [
-              const AstryxAvatar(initials: 'Astryx', label: 'Astryx', size: AstryxAvatarSize.lg),
-              Flexible(child: AstryxHeading('Astryx • ${widget.themeName}', level: AstryxHeadingLevel.display, maxLines: 1)),
-            ],
-          ),
+  Widget _topNav(AstryxTokens t) {
+    return AstryxTopNav(
+      leading: Row(mainAxisSize: MainAxisSize.min, spacing: t.spacing.gapSm, children: [
+        const AstryxAvatar(initials: 'Astryx', label: 'Astryx', size: AstryxAvatarSize.sm),
+        AstryxText('Astryx', variant: AstryxTextVariant.label, style: const TextStyle(fontWeight: FontWeight.w700)),
+      ]),
+      items: [
+        AstryxMegaMenu(
+          label: 'Components',
+          columns: const [
+            AstryxMegaColumn(title: 'Input', links: [
+              AstryxMegaLink(label: 'Text Input', description: 'Single-line field'),
+              AstryxMegaLink(label: 'Slider', description: 'Range selection'),
+            ]),
+            AstryxMegaColumn(title: 'Overlay', links: [
+              AstryxMegaLink(label: 'Dialog', description: 'Modal surface'),
+              AstryxMegaLink(label: 'Toast', description: 'Transient message'),
+            ]),
+          ],
         ),
-        Row(spacing: t.spacing.gapMd, children: [
-          AstryxDropdownMenu<String>(
-            trigger: Container(
-              padding: EdgeInsets.symmetric(horizontal: t.spacing.insetMd, vertical: t.spacing.insetSm),
-              decoration: BoxDecoration(
-                color: t.color.surfaceRaised,
-                borderRadius: t.shape.radiusControl,
-                border: Border.all(color: t.color.borderDefault),
-              ),
-              child: Row(mainAxisSize: MainAxisSize.min, spacing: t.spacing.gapSm, children: [
-                AstryxText('Theme: ${widget.themeName}', variant: AstryxTextVariant.label),
-                Icon(Icons.expand_more, size: 16, color: t.color.textMuted),
-              ]),
-            ),
-            onSelected: widget.onSelectTheme,
-            items: [for (final name in widget.themeNames) AstryxMenuItem(value: name, label: name)],
-          ),
-          AstryxButton(
-            label: widget.isDark ? 'Light' : 'Dark',
-            variant: AstryxButtonVariant.secondary,
-            leading: Icon(widget.isDark ? Icons.light_mode : Icons.dark_mode),
-            onPressed: widget.onToggleMode,
-          ),
+      ],
+      actions: [
+        AstryxDropdownMenu<String>(
+          trigger: _pill(t, 'Theme: ${widget.themeName}'),
+          onSelected: widget.onSelectTheme,
+          items: [for (final name in widget.themeNames) AstryxMenuItem(value: name, label: name)],
+        ),
+        AstryxButton(
+          label: widget.isDark ? 'Light' : 'Dark',
+          variant: AstryxButtonVariant.secondary,
+          size: AstryxButtonSize.sm,
+          onPressed: widget.onToggleMode,
+        ),
+      ],
+    );
+  }
+
+  Widget _pill(AstryxTokens t, String label) => Container(
+        padding: EdgeInsets.symmetric(horizontal: t.spacing.insetMd, vertical: t.spacing.insetSm),
+        decoration: BoxDecoration(
+          color: t.color.surfaceRaised,
+          borderRadius: t.shape.radiusControl,
+          border: Border.all(color: t.color.borderDefault),
+        ),
+        child: Row(mainAxisSize: MainAxisSize.min, spacing: t.spacing.gapSm, children: [
+          AstryxText(label, variant: AstryxTextVariant.label),
+          Icon(Icons.expand_more, size: 16, color: t.color.textMuted),
+        ]),
+      );
+
+  Widget _sideNav(AstryxTokens t) {
+    return AstryxSideNav<String>(
+      selected: _nav,
+      onSelect: (v) => setState(() => _nav = v),
+      sections: const [
+        AstryxNavSection(title: 'Explore', items: [
+          AstryxNavItem(value: 'components', label: 'Components', icon: Icon(Icons.widgets)),
+          AstryxNavItem(value: 'themes', label: 'Themes', icon: Icon(Icons.palette)),
+          AstryxNavItem(value: 'tokens', label: 'Tokens', icon: Icon(Icons.style)),
+        ]),
+        AstryxNavSection(title: 'Account', items: [
+          AstryxNavItem(value: 'settings', label: 'Settings', icon: Icon(Icons.settings)),
         ]),
       ],
     );
   }
 
   Widget _content(AstryxTokens t) {
+    return SingleChildScrollView(
+      padding: EdgeInsets.all(t.spacing.insetLg),
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 760),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: t.spacing.gapLg,
+            children: [
+              AstryxBreadcrumbs(items: [
+                AstryxCrumb(label: 'Astryx', onTap: () {}),
+                AstryxCrumb(label: 'Gallery', onTap: () {}),
+                AstryxCrumb(label: widget.themeName),
+              ]),
+              _navigation(t),
+              _actions(t),
+              _inputs(t),
+              _feedback(context, t),
+              _overlays(context, t),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _navigation(AstryxTokens t) {
     return AstryxSection(
-      title: 'Content',
-      description: 'Typography, avatars and code.',
+      title: 'Navigation',
+      description: 'Tabs, cards, collapsible and pagination.',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: t.spacing.gapMd,
+        spacing: t.spacing.gapLg,
         children: [
-          const AstryxText('Body text reads from the typography tokens, so every theme restyles it.'),
-          Wrap(spacing: t.spacing.gapSm, runSpacing: t.spacing.gapSm, children: const [
-            AstryxCode('flutter run'),
-            AstryxText('Muted caption', tone: AstryxTextTone.muted),
-            AstryxText('Accent link', tone: AstryxTextTone.accent),
-          ]),
-          const AstryxCodeBlock("AstryxButton(label: 'Save', onPressed: () {});", language: 'dart'),
+          AstryxTabList<String>(
+            value: _tab,
+            onChanged: (v) => setState(() => _tab = v),
+            tabs: const [
+              AstryxTab(value: 'overview', label: 'Overview'),
+              AstryxTab(value: 'activity', label: 'Activity'),
+              AstryxTab(value: 'settings', label: 'Settings'),
+            ],
+          ),
+          AstryxCard(child: AstryxText('Selected tab: $_tab')),
+          AstryxGrid(
+            columns: const ResponsiveValue<int>(xs: 1, sm: 2, lg: 3),
+            children: [
+              for (final plan in ['Starter', 'Pro', 'Enterprise'])
+                AstryxCard(
+                  variant: AstryxCardVariant.raised,
+                  selected: plan == 'Pro',
+                  onTap: () {},
+                  semanticLabel: '$plan plan',
+                  child: Column(crossAxisAlignment: CrossAxisAlignment.start, spacing: t.spacing.gapSm, children: [
+                    AstryxHeading(plan, level: AstryxHeadingLevel.h3),
+                    AstryxText('Everything you need.', tone: AstryxTextTone.muted),
+                  ]),
+                ),
+            ],
+          ),
+          const AstryxCollapsible(
+            title: 'Advanced options',
+            child: AstryxText('Hidden configuration lives here.'),
+          ),
+          AstryxPagination(
+            page: _page,
+            pageCount: 12,
+            onChanged: (p) => setState(() => _page = p),
+          ),
         ],
       ),
     );
@@ -168,108 +233,56 @@ class _GalleryScreenState extends State<GalleryScreen> {
   Widget _actions(AstryxTokens t) {
     return AstryxSection(
       title: 'Actions',
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: t.spacing.gapMd,
-        children: [
-          Wrap(spacing: t.spacing.gapMd, runSpacing: t.spacing.gapMd, children: [
-            AstryxButton(label: 'Primary', onPressed: () {}),
-            AstryxButton(label: 'Secondary', variant: AstryxButtonVariant.secondary, onPressed: () {}),
-            AstryxButton(label: 'Ghost', variant: AstryxButtonVariant.ghost, onPressed: () {}),
-            AstryxButton(label: 'Danger', variant: AstryxButtonVariant.danger, onPressed: () {}),
-            const AstryxButton(label: 'Disabled'),
-          ]),
-          Row(spacing: t.spacing.gapMd, children: [
-            AstryxSegmentedControl<String>(
-              value: _view,
-              onChanged: (v) => setState(() => _view = v),
-              segments: const [
-                AstryxSegment(value: 'list', label: 'List', icon: Icon(Icons.list)),
-                AstryxSegment(value: 'grid', label: 'Grid', icon: Icon(Icons.grid_view)),
-                AstryxSegment(value: 'kanban', label: 'Board'),
-              ],
-            ),
-            AstryxDropdownMenu<String>(
-              trigger: Container(
-                padding: EdgeInsets.symmetric(horizontal: t.spacing.insetMd, vertical: t.spacing.insetSm),
-                decoration: BoxDecoration(
-                  color: t.color.surfaceRaised,
-                  borderRadius: t.shape.radiusControl,
-                  border: Border.all(color: t.color.borderDefault),
-                ),
-                child: Row(mainAxisSize: MainAxisSize.min, spacing: t.spacing.gapSm, children: [
-                  AstryxText('Menu', variant: AstryxTextVariant.label),
-                  Icon(Icons.expand_more, size: 16, color: t.color.textMuted),
-                ]),
-              ),
-              onSelected: (_) {},
-              items: const [
-                AstryxMenuItem(value: 'edit', label: 'Edit', leading: Icon(Icons.edit)),
-                AstryxMenuItem(value: 'dupe', label: 'Duplicate', leading: Icon(Icons.copy)),
-                AstryxMenuItem(value: 'del', label: 'Delete', leading: Icon(Icons.delete)),
-              ],
-            ),
-          ]),
-        ],
-      ),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, spacing: t.spacing.gapMd, children: [
+        Wrap(spacing: t.spacing.gapMd, runSpacing: t.spacing.gapMd, children: [
+          AstryxButton(label: 'Primary', onPressed: () {}),
+          AstryxButton(label: 'Secondary', variant: AstryxButtonVariant.secondary, onPressed: () {}),
+          AstryxButton(label: 'Ghost', variant: AstryxButtonVariant.ghost, onPressed: () {}),
+          AstryxButton(label: 'Danger', variant: AstryxButtonVariant.danger, onPressed: () {}),
+        ]),
+        AstryxSegmentedControl<String>(
+          value: _view,
+          onChanged: (v) => setState(() => _view = v),
+          segments: const [
+            AstryxSegment(value: 'list', label: 'List', icon: Icon(Icons.list)),
+            AstryxSegment(value: 'grid', label: 'Grid', icon: Icon(Icons.grid_view)),
+          ],
+        ),
+      ]),
     );
   }
 
   Widget _inputs(AstryxTokens t) {
     return AstryxSection(
       title: 'Data input',
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: t.spacing.gapLg,
-        children: [
-          AstryxField(
-            label: 'Search',
-            description: 'Type to filter results.',
-            child: AstryxTextInput(
-              controller: _search,
-              hintText: 'Search projects…',
-              leading: const Icon(Icons.search),
-            ),
-          ),
-          Row(spacing: t.spacing.gapLg, children: [
-            AstryxCheckbox(value: _checked, label: 'Subscribe', onChanged: (v) => setState(() => _checked = v)),
-            AstryxSwitch(value: _switched, semanticLabel: 'Notifications', onChanged: (v) => setState(() => _switched = v)),
-          ]),
-          SizedBox(
-            width: 260,
-            child: AstryxSlider(
-              value: _volume,
-              semanticLabel: 'Volume',
-              onChanged: (v) => setState(() => _volume = v),
-            ),
-          ),
-        ],
-      ),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, spacing: t.spacing.gapLg, children: [
+        AstryxField(
+          label: 'Search',
+          description: 'Type to filter results.',
+          child: AstryxTextInput(controller: _search, hintText: 'Search…', leading: const Icon(Icons.search)),
+        ),
+        Row(spacing: t.spacing.gapLg, children: [
+          AstryxCheckbox(value: _checked, label: 'Subscribe', onChanged: (v) => setState(() => _checked = v)),
+          AstryxSwitch(value: _switched, semanticLabel: 'Notifications', onChanged: (v) => setState(() => _switched = v)),
+        ]),
+        SizedBox(width: 260, child: AstryxSlider(value: _volume, semanticLabel: 'Volume', onChanged: (v) => setState(() => _volume = v))),
+      ]),
     );
   }
 
   Widget _feedback(BuildContext context, AstryxTokens t) {
     return AstryxSection(
       title: 'Feedback',
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: t.spacing.gapMd,
-        children: [
-          Wrap(spacing: t.spacing.gapSm, runSpacing: t.spacing.gapSm, children: const [
-            AstryxBadge('Default'),
-            AstryxBadge('Active', tone: AstryxTone.accent, leadingDot: true),
-            AstryxBadge('Success', tone: AstryxTone.success),
-            AstryxBadge('Failed', tone: AstryxTone.danger),
-            AstryxStatusDot(tone: AstryxTone.success, label: 'Online'),
-            AstryxSpinner(size: AstryxSpinnerSize.sm),
-          ]),
-          const AstryxBanner(
-            title: 'Trial ending',
-            message: 'Your workspace trial ends in 3 days.',
-            tone: AstryxTone.warning,
-          ),
-        ],
-      ),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, spacing: t.spacing.gapMd, children: [
+        Wrap(spacing: t.spacing.gapSm, runSpacing: t.spacing.gapSm, children: const [
+          AstryxBadge('Default'),
+          AstryxBadge('Active', tone: AstryxTone.accent, leadingDot: true),
+          AstryxBadge('Success', tone: AstryxTone.success),
+          AstryxStatusDot(tone: AstryxTone.success, label: 'Online'),
+          AstryxSpinner(size: AstryxSpinnerSize.sm),
+        ]),
+        const AstryxBanner(title: 'Trial ending', message: 'Your workspace trial ends in 3 days.', tone: AstryxTone.warning),
+      ]),
     );
   }
 
@@ -277,10 +290,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
     return AstryxSection(
       title: 'Overlays',
       child: Wrap(spacing: t.spacing.gapMd, runSpacing: t.spacing.gapMd, children: [
-        const AstryxTooltip(
-          message: 'Helpful hint',
-          child: AstryxBadge('Hover me', tone: AstryxTone.accent),
-        ),
+        const AstryxTooltip(message: 'Helpful hint', child: AstryxBadge('Hover me', tone: AstryxTone.accent)),
         AstryxButton(
           label: 'Open dialog',
           variant: AstryxButtonVariant.secondary,
