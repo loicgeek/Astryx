@@ -14,6 +14,11 @@ export 'src/action/button/astryx_button_style.dart';
 export 'src/action/dropdown_menu/astryx_dropdown_menu.dart';
 export 'src/action/segmented_control/astryx_segmented_control.dart';
 
+// Navigation
+export 'src/navigation/breadcrumbs/astryx_breadcrumbs.dart';
+export 'src/navigation/pagination/astryx_pagination.dart';
+export 'src/navigation/tab_list/astryx_tab_list.dart';
+
 // Overlay
 export 'src/overlay/dialog/astryx_dialog.dart';
 export 'src/overlay/popover/astryx_popover.dart';
