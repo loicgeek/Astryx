@@ -1,10 +1,20 @@
 import 'model.dart';
+import 'registry_props.g.dart';
 
 /// The Astryx component registry — the single source of truth the CLI and MCP
-/// server read. (Props are curated here today; the planned `tool/gen_registry`
-/// analyzer harvester will auto-populate them from the widget constructors so
-/// they can never drift from the real API.)
-const List<AstryxComponentDoc> astryxRegistry = [
+/// server read. Editorial fields (category, description, sample, a11y role,
+/// composition hints, slots) are curated in [_curatedRegistry]; **props come
+/// from [harvestedProps]** (extracted from the real widget constructors by
+/// `tool/gen_registry.dart`), so a widget component's API surface can never
+/// drift from the code. Function-based entries (showAstryx*) keep curated props.
+final List<AstryxComponentDoc> astryxRegistry = [
+  for (final c in _curatedRegistry)
+    harvestedProps.containsKey(c.name) ? c.withProps(harvestedProps[c.name]!) : c,
+];
+
+/// Editorial metadata + curated fallback props (used when no widget constructor
+/// is harvested, e.g. for the show*-function components).
+const List<AstryxComponentDoc> _curatedRegistry = [
   // ── Action ──────────────────────────────────────────────────────────────
   AstryxComponentDoc(
     name: 'AstryxButton',

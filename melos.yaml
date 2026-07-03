@@ -31,3 +31,7 @@ scripts:
     exec: dart run build_runner build --delete-conflicting-outputs
     packageFilters:
       dependsOn: build_runner
+
+  gen:registry:
+    description: Harvest component props from the widget constructors into astryx_core.
+    run: cd packages/astryx_core && dart run tool/gen_registry.dart

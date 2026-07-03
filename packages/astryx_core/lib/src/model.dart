@@ -60,6 +60,20 @@ class AstryxComponentDoc {
   /// Named structural builder slots the component exposes.
   final List<String> slots;
 
+  /// Returns a copy with [newProps] — used to swap curated props for the ones
+  /// harvested from the real widget constructor.
+  AstryxComponentDoc withProps(List<AstryxProp> newProps) => AstryxComponentDoc(
+        name: name,
+        category: category,
+        description: description,
+        props: newProps,
+        sample: sample,
+        status: status,
+        a11yRole: a11yRole,
+        composesWith: composesWith,
+        slots: slots,
+      );
+
   Map<String, Object?> toJson() => {
         'name': name,
         'category': category,
