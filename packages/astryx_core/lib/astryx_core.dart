@@ -7,4 +7,5 @@ export 'src/model.dart';
 export 'src/ops.dart';
 export 'src/registry.dart' show astryxRegistry;
 export 'src/services.dart';
+export 'src/swizzle.dart';
 export 'src/templates.dart';
