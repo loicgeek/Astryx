@@ -48,6 +48,14 @@ const List<AstryxComponentDoc> astryxRegistry = [
     ],
     sample: "AstryxDropdownMenu<String>(trigger: ..., items: [...], onSelected: (x) {})",
   ),
+  AstryxComponentDoc(
+    name: 'AstryxToolbar',
+    category: 'Action',
+    a11yRole: 'toolbar',
+    description: 'Raised group of controls with Left/Right roving focus; AstryxToolbar.divider() separates groups.',
+    props: [AstryxProp('children', 'List<Widget>', required: true)],
+    sample: 'AstryxToolbar(children: [AstryxButton(...), AstryxToolbar.divider(), ...])',
+  ),
 
   // ── Container ───────────────────────────────────────────────────────────
   AstryxComponentDoc(
@@ -73,6 +81,17 @@ const List<AstryxComponentDoc> astryxRegistry = [
       AstryxProp('initiallyExpanded', 'bool', defaultValue: 'false'),
     ],
     sample: "AstryxCollapsible(title: 'Details', child: Text('...'))",
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxCarousel',
+    category: 'Container',
+    description: 'Swipeable pager with prev/next arrows, dot indicator and announced position.',
+    props: [
+      AstryxProp('items', 'List<Widget>', required: true),
+      AstryxProp('height', 'double', defaultValue: '200'),
+      AstryxProp('showArrows', 'bool', defaultValue: 'true'),
+    ],
+    sample: 'AstryxCarousel(items: [...])',
   ),
 
   // ── Content ─────────────────────────────────────────────────────────────
@@ -127,6 +146,28 @@ const List<AstryxComponentDoc> astryxRegistry = [
       AstryxProp('language', 'String?'),
     ],
     sample: "AstryxCodeBlock('final x = 1;', language: 'dart')",
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxBlockquote',
+    category: 'Content',
+    description: 'A quotation with a left accent bar and an optional citation.',
+    props: [
+      AstryxProp('text', 'String?'),
+      AstryxProp('child', 'Widget?'),
+      AstryxProp('citation', 'String?'),
+    ],
+    sample: "AstryxBlockquote(text: 'Stay hungry.', citation: 'Anon')",
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxMarkdown',
+    category: 'Content',
+    description: 'Renders a subset of Markdown with Astryx components (headings, bold/italic, code, links, quotes, lists, rules).',
+    composesWith: ['AstryxHeading', 'AstryxCode', 'AstryxCodeBlock', 'AstryxBlockquote'],
+    props: [
+      AstryxProp('data', 'String', required: true),
+      AstryxProp('onLinkTap', 'ValueChanged<String>?'),
+    ],
+    sample: "AstryxMarkdown('# Title\\n\\nHello **world**.')",
   ),
 
   // ── Data Input ──────────────────────────────────────────────────────────
@@ -311,6 +352,64 @@ const List<AstryxComponentDoc> astryxRegistry = [
       AstryxProp('onDismiss', 'VoidCallback?'),
     ],
     sample: "AstryxBanner(message: 'Saved', tone: AstryxTone.success)",
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxProgressBar',
+    category: 'Feedback',
+    a11yRole: 'progressbar',
+    description: 'Linear progress; determinate (announces %) or indeterminate. Reduced-motion aware.',
+    props: [
+      AstryxProp('value', 'double?', doc: 'Null = indeterminate.'),
+      AstryxProp('semanticLabel', 'String', defaultValue: 'Progress'),
+    ],
+    sample: 'AstryxProgressBar(value: 0.4)',
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxSkeleton',
+    category: 'Feedback',
+    description: 'Shimmer placeholder for loading content (static under reduced motion); AstryxSkeleton.lines(n).',
+    props: [
+      AstryxProp('width', 'double?'),
+      AstryxProp('height', 'double', defaultValue: '16'),
+    ],
+    sample: 'AstryxSkeleton(width: 120)',
+  ),
+
+  // ── Table & List ────────────────────────────────────────────────────────
+  AstryxComponentDoc(
+    name: 'AstryxList',
+    category: 'Table & List',
+    description: 'Vertical rows with optional dividers; interactive rows get button/selected semantics.',
+    props: [
+      AstryxProp('items', 'List<AstryxListItem>', required: true),
+      AstryxProp('dividers', 'bool', defaultValue: 'true'),
+    ],
+    sample: 'AstryxList(items: [AstryxListItem(title: ...)])',
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxTable',
+    category: 'Table & List',
+    a11yRole: 'table',
+    description: 'Data table: styled header, flex-aligned columns, hover/selectable rows, sortable headers.',
+    props: [
+      AstryxProp('columns', 'List<AstryxColumn>', required: true),
+      AstryxProp('rows', 'List<AstryxRow>', required: true),
+      AstryxProp('sortColumnIndex', 'int?'),
+      AstryxProp('onSort', 'ValueChanged<int>?'),
+    ],
+    sample: 'AstryxTable(columns: [...], rows: [...])',
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxTreeList',
+    category: 'Table & List',
+    a11yRole: 'tree',
+    description: 'Hierarchical expandable list; branches toggle, leaves select, tree-item semantics.',
+    props: [
+      AstryxProp('roots', 'List<AstryxTreeNode>', required: true),
+      AstryxProp('selected', 'Object?'),
+      AstryxProp('onSelect', 'ValueChanged<Object?>?'),
+    ],
+    sample: 'AstryxTreeList(roots: [...], onSelect: (v) {})',
   ),
 
   // ── Layout ──────────────────────────────────────────────────────────────

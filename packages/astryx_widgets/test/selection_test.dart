@@ -61,6 +61,27 @@ void main() {
     expect(picked, 'Apricot');
   });
 
+  testWidgets('AstryxTypeahead closes its suggestions when focus leaves the field', (tester) async {
+    final other = FocusNode();
+    addTearDown(other.dispose);
+    await tester.pumpWidget(wrap(Column(mainAxisSize: MainAxisSize.min, children: [
+      SizedBox(
+        width: 300,
+        child: AstryxTypeahead<String>(suggestions: _match, itemLabel: (s) => s, onSelected: (_) {}),
+      ),
+      Focus(focusNode: other, child: const SizedBox(width: 10, height: 10)),
+    ])));
+
+    await tester.enterText(find.byType(EditableText), 'ap');
+    await tester.pump();
+    expect(find.text('Apple'), findsOneWidget);
+
+    // Focus elsewhere (simulates an outside tap) → suggestions close.
+    other.requestFocus();
+    await tester.pump();
+    expect(find.text('Apple'), findsNothing);
+  });
+
   testWidgets('AstryxMultiSelector toggles options in the checklist', (tester) async {
     Set<String> selected = {};
     await tester.pumpWidget(wrap(StatefulBuilder(

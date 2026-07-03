@@ -128,7 +128,8 @@ class _CommandPaletteState extends State<_CommandPalette> {
       bindings: {const SingleActivator(LogicalKeyboardKey.escape): () => Navigator.of(context).maybePop()},
       child: Align(
         alignment: const Alignment(0, -0.5),
-        child: Semantics(
+        child: AstryxTextDefaults(
+          child: Semantics(
           scopesRoute: true,
           explicitChildNodes: true,
           child: Container(
@@ -192,6 +193,7 @@ class _CommandPaletteState extends State<_CommandPalette> {
               ],
             ),
           ),
+        ),
         ),
       ),
     );

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:astryx_foundations/astryx_foundations.dart';
 import 'package:astryx_tokens/astryx_tokens.dart';
 import 'package:flutter/widgets.dart';
 
@@ -79,16 +80,18 @@ class _AstryxHoverCardState extends State<AstryxHoverCard> {
               child: MouseRegion(
                 onEnter: (_) => _keepOpen(),
                 onExit: (_) => _scheduleClose(),
-                child: Container(
-                  constraints: BoxConstraints(maxWidth: widget.maxWidth),
-                  padding: EdgeInsets.all(t.spacing.insetMd),
-                  decoration: BoxDecoration(
-                    color: t.color.surfaceOverlay,
-                    borderRadius: t.shape.radiusOverlay,
-                    boxShadow: t.elevation.overlay,
-                    border: Border.all(color: t.color.borderDefault),
+                child: AstryxTextDefaults(
+                  child: Container(
+                    constraints: BoxConstraints(maxWidth: widget.maxWidth),
+                    padding: EdgeInsets.all(t.spacing.insetMd),
+                    decoration: BoxDecoration(
+                      color: t.color.surfaceOverlay,
+                      borderRadius: t.shape.radiusOverlay,
+                      boxShadow: t.elevation.overlay,
+                      border: Border.all(color: t.color.borderDefault),
+                    ),
+                    child: widget.card,
                   ),
-                  child: widget.card,
                 ),
               ),
             ),

@@ -159,6 +159,13 @@ class _GalleryScreenState extends State<GalleryScreen> {
     );
   }
 
+  String get _navLabel => switch (_nav) {
+        'themes' => 'Themes',
+        'tokens' => 'Tokens',
+        'settings' => 'Settings',
+        _ => 'Components',
+      };
+
   Widget _content(AstryxTokens t) {
     return SingleChildScrollView(
       padding: EdgeInsets.all(t.spacing.insetLg),
@@ -172,9 +179,12 @@ class _GalleryScreenState extends State<GalleryScreen> {
               AstryxBreadcrumbs(items: [
                 AstryxCrumb(label: 'Astryx', onTap: () {}),
                 AstryxCrumb(label: 'Gallery', onTap: () {}),
-                AstryxCrumb(label: widget.themeName),
+                AstryxCrumb(label: _navLabel),
               ]),
+              AstryxHeading(_navLabel, level: AstryxHeadingLevel.display),
+              AstryxText('Section “$_navLabel” · theme “${widget.themeName}”.', tone: AstryxTextTone.muted),
               _navigation(t),
+              _dataDisplay(t),
               _actions(t),
               _inputs(t),
               _feedback(context, t),
@@ -229,6 +239,52 @@ class _GalleryScreenState extends State<GalleryScreen> {
             pageCount: 12,
             onChanged: (p) => setState(() => _page = p),
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget _dataDisplay(AstryxTokens t) {
+    return AstryxSection(
+      title: 'Data & content',
+      description: 'Tables, lists, progress and markdown.',
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: t.spacing.gapLg,
+        children: [
+          AstryxTable(
+            sortColumnIndex: 1,
+            sortDirection: AstryxSortDirection.descending,
+            onSort: (_) {},
+            columns: const [
+              AstryxColumn(label: 'File', sortable: true, flex: 2),
+              AstryxColumn(label: 'Size', numeric: true, sortable: true),
+              AstryxColumn(label: 'Owner'),
+            ],
+            rows: [
+              AstryxRow(cells: const [Text('report.pdf'), Text('2.4 MB'), Text('Ada')], onTap: () {}),
+              AstryxRow(cells: const [Text('notes.txt'), Text('12 KB'), Text('Grace')], onTap: () {}),
+              AstryxRow(cells: const [Text('logo.svg'), Text('3 KB'), Text('Alan')], onTap: () {}),
+            ],
+          ),
+          const AstryxProgressBar(value: 0.62, semanticLabel: 'Storage used'),
+          AstryxCarousel(
+            height: 120,
+            items: [
+              for (final (i, tone) in [
+                (1, t.color.accentDefault),
+                (2, t.color.success),
+                (3, t.color.warning),
+              ])
+                Container(
+                  color: Color.alphaBlend(tone.withValues(alpha: 0.15), t.color.surfaceSunken),
+                  alignment: Alignment.center,
+                  child: AstryxHeading('Slide $i', level: AstryxHeadingLevel.h2),
+                ),
+            ],
+          ),
+          const AstryxMarkdown('Supports **bold**, `code`, and [links](https://astryx.dev). '
+              '\n\n> Rendered with Astryx components.'),
         ],
       ),
     );

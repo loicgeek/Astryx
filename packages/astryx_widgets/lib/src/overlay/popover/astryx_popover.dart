@@ -1,3 +1,4 @@
+import 'package:astryx_foundations/astryx_foundations.dart';
 import 'package:astryx_tokens/astryx_tokens.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -116,18 +117,20 @@ class _PopoverOverlay extends StatelessWidget {
               bindings: {const SingleActivator(LogicalKeyboardKey.escape): onDismiss},
               child: Focus(
                 autofocus: true,
-                child: Semantics(
-                  container: true,
-                  child: Container(
-                    constraints: BoxConstraints(maxWidth: maxWidth),
-                    padding: EdgeInsets.all(tokens.spacing.insetMd),
-                    decoration: BoxDecoration(
-                      color: tokens.color.surfaceOverlay,
-                      borderRadius: tokens.shape.radiusOverlay,
-                      boxShadow: tokens.elevation.overlay,
-                      border: Border.all(color: tokens.color.borderDefault),
+                child: AstryxTextDefaults(
+                  child: Semantics(
+                    container: true,
+                    child: Container(
+                      constraints: BoxConstraints(maxWidth: maxWidth),
+                      padding: EdgeInsets.all(tokens.spacing.insetMd),
+                      decoration: BoxDecoration(
+                        color: tokens.color.surfaceOverlay,
+                        borderRadius: tokens.shape.radiusOverlay,
+                        boxShadow: tokens.elevation.overlay,
+                        border: Border.all(color: tokens.color.borderDefault),
+                      ),
+                      child: child,
                     ),
-                    child: child,
                   ),
                 ),
               ),

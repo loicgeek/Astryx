@@ -5,16 +5,19 @@ A Flutter/Dart port of [Meta's Astryx](https://astryx.atmeta.com/) design system
 token-driven theming; source-available components (swizzle-ready); with an
 AI-parity CLI + MCP server planned (see the plan).
 
-> **Status: Jalons 0–4 + 7 done.** ~42 components (incl. rich inputs and
-> overlays) + the full ~10-theme catalog + a responsive App Shell, plus the
-> AI-parity tooling (CLI, manifest, MCP server). Everything analyzes clean and
-> passes tests (92 Flutter + 18 Dart across the workspace). The library depends
-> only on Flutter's `widgets` + theme layer — no Material *widgets*. Remaining
-> milestones (tables & lists, chat) are in the plan.
+> **Status: Jalons 0–5 + 7 done.** ~51 components + the full ~10-theme catalog +
+> a responsive App Shell, plus the AI-parity tooling (CLI, manifest, MCP server).
+> Everything analyzes clean and passes tests (102 Flutter + 18 Dart across the
+> workspace). The library depends only on Flutter's `widgets` + theme layer — no
+> Material *widgets*. Remaining milestone (Chat) is in the plan.
 
-Rich additions in Jalon 4: **Calendar** (DST-safe keyboard grid), **Date/Time
-Input**, **Typeahead**, **Multi Selector**, **Tokenizer**, **Command Palette**
-(⌘K), **Hover Card**, **Lightbox**.
+Jalon 4 (rich input & overlays): **Calendar** (DST-safe keyboard grid),
+**Date/Time Input**, **Typeahead**, **Multi Selector**, **Tokenizer**, **Command
+Palette** (⌘K), **Hover Card**, **Lightbox**.
+
+Jalon 5 (data display): **List**, **Table** (sortable), **Tree List**,
+**Carousel**, **Progress Bar**, **Skeleton**, **Blockquote**, **Markdown**,
+**Toolbar**.
 
 ## AI-parity tooling (the Astryx signature)
 

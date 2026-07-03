@@ -1,3 +1,4 @@
+import 'package:astryx_foundations/astryx_foundations.dart';
 import 'package:astryx_tokens/astryx_tokens.dart';
 import 'package:flutter/widgets.dart';
 
@@ -63,9 +64,9 @@ class _Bubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Inverse surface for contrast against the page.
-    return FractionalTranslation(
-      translation: const Offset(-0.5, 0),
+    // Inverse surface for contrast against the page. The follower already
+    // centers this above the target, so no extra translation.
+    return AstryxTextDefaults(
       child: Container(
         constraints: const BoxConstraints(maxWidth: 240),
         padding: EdgeInsets.symmetric(

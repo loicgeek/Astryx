@@ -1,3 +1,4 @@
+import 'package:astryx_foundations/astryx_foundations.dart';
 import 'package:astryx_tokens/astryx_tokens.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -43,7 +44,19 @@ class _AstryxTypeaheadState<T> extends State<AstryxTypeahead<T>> {
   int _highlight = -1;
 
   @override
+  void initState() {
+    super.initState();
+    // Close the suggestions when focus leaves the field (outside tap/tab-away).
+    _fieldFocus.addListener(_onFocusChange);
+  }
+
+  void _onFocusChange() {
+    if (!_fieldFocus.hasFocus) _portal.hide();
+  }
+
+  @override
   void dispose() {
+    _fieldFocus.removeListener(_onFocusChange);
     if (widget.controller == null) _text.dispose();
     _fieldFocus.dispose();
     super.dispose();
@@ -146,7 +159,8 @@ class _SuggestionsOverlay extends StatelessWidget {
       offset: Offset(0, t.spacing.gapSm),
       child: Align(
         alignment: Alignment.topLeft,
-        child: Semantics(
+        child: AstryxTextDefaults(
+          child: Semantics(
           container: true,
           explicitChildNodes: true,
           child: Container(
@@ -174,6 +188,7 @@ class _SuggestionsOverlay extends StatelessWidget {
               ),
             ),
           ),
+        ),
         ),
       ),
     );

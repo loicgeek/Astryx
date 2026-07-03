@@ -1,3 +1,4 @@
+import 'package:astryx_foundations/astryx_foundations.dart';
 import 'package:astryx_tokens/astryx_tokens.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -101,10 +102,7 @@ class _MegaOverlay extends StatelessWidget {
     return Stack(
       children: [
         Positioned.fill(
-          child: MouseRegion(
-            onEnter: (_) => onDismiss(),
-            child: GestureDetector(behavior: HitTestBehavior.translucent, onTap: onDismiss),
-          ),
+          child: GestureDetector(behavior: HitTestBehavior.translucent, onTap: onDismiss),
         ),
         CompositedTransformFollower(
           link: link,
@@ -117,7 +115,7 @@ class _MegaOverlay extends StatelessWidget {
               bindings: {const SingleActivator(LogicalKeyboardKey.escape): onDismiss},
               child: Focus(
                 autofocus: true,
-                child: MouseRegion(
+                child: AstryxTextDefaults(
                   child: Container(
                     padding: EdgeInsets.all(t.spacing.insetMd),
                     decoration: BoxDecoration(

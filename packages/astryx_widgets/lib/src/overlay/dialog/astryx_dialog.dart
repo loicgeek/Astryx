@@ -86,7 +86,7 @@ Future<T?> showAstryxDialog<T>({
           const SingleActivator(LogicalKeyboardKey.escape): () =>
               Navigator.of(context).maybePop(),
         },
-        child: Focus(autofocus: true, child: builder(context)),
+        child: Focus(autofocus: true, child: AstryxTextDefaults(child: builder(context))),
       );
     },
     transitionBuilder: (context, anim, _, child) {
