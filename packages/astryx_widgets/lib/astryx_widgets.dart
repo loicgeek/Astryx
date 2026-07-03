@@ -8,6 +8,8 @@ library astryx_widgets;
 // Action
 export 'src/action/button/astryx_button.dart';
 export 'src/action/button/astryx_button_style.dart';
+export 'src/action/dropdown_menu/astryx_dropdown_menu.dart';
+export 'src/action/segmented_control/astryx_segmented_control.dart';
 
 // Overlay
 export 'src/overlay/dialog/astryx_dialog.dart';
