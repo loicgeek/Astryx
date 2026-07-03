@@ -541,6 +541,74 @@ const List<AstryxComponentDoc> astryxRegistry = [
     sample: "AstryxMegaMenu(label: 'Products', columns: [...])",
   ),
 
+  // ── Chat (AI-oriented) ──────────────────────────────────────────────────
+  AstryxComponentDoc(
+    name: 'AstryxChatMessage',
+    category: 'Chat',
+    description: 'A chat bubble: user (accent, plain text) or assistant (avatar + Markdown), with optional tool calls + metadata.',
+    composesWith: ['AstryxMarkdown', 'AstryxAvatar', 'AstryxChatToolCalls', 'AstryxChatMessageMetadata'],
+    slots: ['avatar', 'toolCalls', 'metadata'],
+    props: [
+      AstryxProp('role', 'AstryxChatRole', required: true, doc: 'user | assistant'),
+      AstryxProp('content', 'String', required: true),
+      AstryxProp('avatar', 'Widget?'),
+    ],
+    sample: "AstryxChatMessage(role: AstryxChatRole.assistant, content: '**Hi**')",
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxChatSystemMessage',
+    category: 'Chat',
+    description: 'A centered, muted conversation notice between hairlines.',
+    props: [AstryxProp('text', 'String', required: true)],
+    sample: "AstryxChatSystemMessage('New conversation')",
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxChatMessageMetadata',
+    category: 'Chat',
+    description: 'Timestamp/model line under a message with trailing action slots.',
+    slots: ['actions'],
+    props: [
+      AstryxProp('timestamp', 'String?'),
+      AstryxProp('model', 'String?'),
+      AstryxProp('actions', 'List<Widget>', defaultValue: 'const []'),
+    ],
+    sample: "AstryxChatMessageMetadata(timestamp: '12:04', model: 'opus-4.8')",
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxChatToolCalls',
+    category: 'Chat',
+    description: 'Collapsible tool-invocation panels with running/success/error status and arguments/result code blocks — for agent chat UIs.',
+    composesWith: ['AstryxBadge', 'AstryxSpinner', 'AstryxCodeBlock'],
+    props: [AstryxProp('calls', 'List<AstryxToolCall>', required: true)],
+    sample: 'AstryxChatToolCalls(calls: [AstryxToolCall(name: ..., status: ...)])',
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxChatComposer',
+    category: 'Chat',
+    description: 'Multiline message input; Enter sends, Shift+Enter inserts a newline; send disabled while empty.',
+    composesWith: ['AstryxChatLayout'],
+    slots: ['leadingActions'],
+    props: [
+      AstryxProp('onSend', 'ValueChanged<String>', required: true),
+      AstryxProp('enabled', 'bool', defaultValue: 'true'),
+      AstryxProp('hintText', 'String', defaultValue: "'Send a message…'"),
+    ],
+    sample: 'AstryxChatComposer(onSend: (text) {})',
+  ),
+  AstryxComponentDoc(
+    name: 'AstryxChatLayout',
+    category: 'Chat',
+    description: 'Scrollable messages + pinned composer with auto-scroll and an optional streaming placeholder.',
+    composesWith: ['AstryxChatMessage', 'AstryxChatComposer'],
+    slots: ['composer', 'streaming'],
+    props: [
+      AstryxProp('messages', 'List<Widget>', required: true),
+      AstryxProp('composer', 'Widget', required: true),
+      AstryxProp('streaming', 'Widget?'),
+    ],
+    sample: 'AstryxChatLayout(messages: [...], composer: AstryxChatComposer(...))',
+  ),
+
   // ── Overlay ─────────────────────────────────────────────────────────────
   AstryxComponentDoc(
     name: 'AstryxTooltip',
